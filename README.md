@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Aidan Lynch
 - Klaus Curde
-- MEMBER3
+- Adam Neulight
 - MEMBER4
 
 
