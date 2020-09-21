@@ -6,6 +6,7 @@ a web micro-framework.
 
 ## Team
 
+- Zachary Eckhardt
 - Aidan Lynch
 - Klaus Curde
 - Adam Neulight
