@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Aidan Lynch
-- MEMBER2
+- Klaus Curde
 - MEMBER3
 - MEMBER4
 
