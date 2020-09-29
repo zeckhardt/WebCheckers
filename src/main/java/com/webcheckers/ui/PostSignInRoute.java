@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -11,8 +13,6 @@ import java.util.logging.Logger;
 
 public class PostSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
-
-    private static final Message ERROR_MSG = Message.info("That username is already taken! Please try another.");
 
     private final TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
@@ -46,22 +46,23 @@ public class PostSignInRoute implements Route {
         LOG.finer("PostSignInRoute is invoked.");
 
         String username = request.queryParams("username");
-        boolean validUsername = playerLobby.usernameAvailable(username);
-
+        boolean validUsername = playerLobby.isValidUsername(username);
         //
         if (validUsername) {
-            //TODO: save new player in session
+            Player player = new Player(username);
+            Session session = request.session(true);
+            session.attribute("player", player);
+            playerLobby.addPlayer(player);
             response.redirect("/");
+            return 200;
         }
         else {
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Sign In");
-            vm.put("message", ERROR_MSG);
+            vm.put("message", playerLobby.getErrorMsg());
 
             // render the View
-            templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
-
-        return null;
     }
 }
