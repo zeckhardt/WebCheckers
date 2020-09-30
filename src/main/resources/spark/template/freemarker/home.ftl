@@ -25,6 +25,18 @@
             spectating active games,
             or replay archived games
     -->
+    <div>
+        <#if players??>
+            Players online:
+            <#list players as player>
+                <#if player.name != currentUser.name>
+                    </br> ${player.name}
+                </#if>
+            </#list>
+        <#else>
+            Other players online: ${numPlayers}
+        </#if>
+    </div>
 
   </div>
 
