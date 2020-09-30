@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to POST the username.
+ *
+ * @author Aidan Lynch
+ */
 public class PostSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
@@ -22,6 +27,8 @@ public class PostSignInRoute implements Route {
      *
      * @param templateEngine
      *   the HTML template rendering engine
+     * @param playerLobby
+     *   the object logging player activities
      */
     public PostSignInRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
@@ -39,7 +46,7 @@ public class PostSignInRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   //TODO: IDK
+     *   200 on success, signin.ftl on failure
      */
     @Override
     public Object handle(Request request, Response response) {
