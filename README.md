@@ -10,7 +10,6 @@ a web micro-framework.
 - Aidan Lynch
 - Klaus Curde
 - Adam Neulight
-- MEMBER4
 
 
 ## Prerequisites
