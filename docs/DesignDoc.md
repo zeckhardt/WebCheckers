@@ -9,16 +9,18 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Team A - Tomato
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Zachary Eckhardt
+  * Aidan Lynch
+  * Klaus Curde
+  * Adam Neulight
 
 ## Executive Summary
 
-This is a summary of the project.
+This WebCheckers application utilizes the Java Spark framework. The user goes head to head in a game of checkers
+against other signed in users. To get started, the user enters a unique username. Once a username is established they
+now ready to play by either selecting or being selected by another user.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
@@ -54,11 +56,10 @@ This section describes the features of the application.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain-model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+> _Each game being played is on a single board with two players. Each player has the ability to control 12 pieces of
+>their assigned color. The pieces are then placed in a pattern on the board composed of 64 squares._
 
 
 ## Architecture and Design
@@ -87,10 +88,14 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](state-diagram.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+> _The interface is comprised of a few web pages with the addition of other states that indicate the user's current
+>status. The user starts out disconnected (no HTTP connection). Once connected the user is on the home screen, 
+>there is then a prompt to sign in, using a username via the sign-in page. A player then awaits game creation by either
+>via selecting a user to play against. The red player is then prompted to make a move and waits for the opponent user to
+>take their turn. The players swap states depending on whose turn it is. Once a winner is established users are redirected
+>back to the home screen._
 
 
 ### UI Tier
