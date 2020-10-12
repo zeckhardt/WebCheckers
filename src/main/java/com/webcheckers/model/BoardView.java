@@ -15,8 +15,9 @@ public class BoardView {
 
     /**
      * Create a new board with a unique identifier
+     * @param id
      */
-    public BoardView(int id) {
+    public BoardView(Integer id) {
         this.id = Objects.requireNonNull(id, "an ID must be generated");
         makeRows();
     }
@@ -28,6 +29,10 @@ public class BoardView {
         for (int i = 0; i < 8; i++) {
             this.rows.add(new Row(i));
         }
+    }
+
+    public ArrayList<Row> getRows() {
+        return this.rows;
     }
 
     /**
