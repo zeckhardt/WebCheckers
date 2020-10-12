@@ -1,13 +1,11 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class GetGameRoute implements Route {
@@ -28,9 +26,22 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is initialized.");
     }
 
-    public String handle(Request request, Response response) {
+    public Object handle(Request request, Response response) {
+        LOG.finer("GetGameRoute invoked.");
+
         final Map<String, Object> vm = new HashMap<>();
-        return null;
+        ArrayList<Player> players = playerLobby.getPlayers();
+        Player player1 = request.session().attribute("player");
+        Player player2 = null; // nooooooo
+
+        // TODO: Add error handling and randomized role selection
+        vm.put("viewMode", "PLAY");
+        vm.put("currentUser", player1);
+        vm.put("redPlayer", player2);
+        vm.put("whitePlayer", player1);
+
+
+        return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
 }
 

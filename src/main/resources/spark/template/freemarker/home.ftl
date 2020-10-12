@@ -30,7 +30,7 @@
             Players online:
             <#list players as player>
                 <#if player.name != currentUser.name>
-                    </br> ${player.name}
+                    </br> <a href="game"> ${player.name}</a>
                 </#if>
             </#list>
         <#else>
