@@ -1,9 +1,7 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
