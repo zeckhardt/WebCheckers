@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -7,17 +8,26 @@ import java.util.Objects;
  *
  * @author Klaus Curde
  */
-public class Board {
+public class BoardView {
     private Integer id;
-    public Player player1;
-    public Player player2;
+
+    private ArrayList<Row> rows = new ArrayList<>();
 
     /**
      * Create a new board with a unique identifier
-     * @param id the id of the board
      */
-    public Board(int id, Player player1, Player player2) {
+    public BoardView(int id) {
         this.id = Objects.requireNonNull(id, "an ID must be generated");
+        makeRows();
+    }
+
+    /**
+     * Populate the rows iterator with Row objects
+     */
+    private void makeRows() {
+        for (int i = 0; i < 8; i++) {
+            this.rows.add(new Row(i));
+        }
     }
 
     /**
@@ -37,6 +47,6 @@ public class Board {
     public boolean equals(Object other) {
         if (other == null) {
             return false;
-        } else return other instanceof Board;
+        } else return other instanceof BoardView;
     }
 }
