@@ -8,17 +8,14 @@ import java.util.Objects;
  *
  * @author Klaus Curde
  */
-public class BoardView {
-    private Integer id;
+public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
 
     /**
-     * Create a new board with a unique identifier
-     * @param id
+     * Create a new board
      */
-    public BoardView(Integer id) {
-        this.id = Objects.requireNonNull(id, "an ID must be generated");
+    public Board() {
         makeRows();
     }
 
@@ -36,22 +33,15 @@ public class BoardView {
     }
 
     /**
-     * Getter for the id
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
      * Checks if the boards are the same.
      * @param other the other board to look at
      * @return if same
      */
     @Override
     public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        } else return other instanceof BoardView;
+        if (other == null) return false;
+        else if (!(other instanceof Board)) return false;
+        Board that = (Board) other;
+        return this.rows.equals(that.getRows());
     }
 }

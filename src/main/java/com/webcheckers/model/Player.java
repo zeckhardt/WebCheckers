@@ -10,7 +10,8 @@ import java.util.Objects;
 public class Player {
 
     // Attributes
-    public String name;
+    private String name;
+    private boolean inGame;
 
     /**
      * Create a new player with the given name.
@@ -20,14 +21,24 @@ public class Player {
      */
     public Player(String name) {
         this.name = Objects.requireNonNull(name, "name is required");
+        this.inGame = false;
     }
 
     /**
+     * Gets the player's name
      *
-     * @return
+     * @return player's name
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets whether the player is in a game
+     * @return if in a game
+     */
+    public boolean isInGame() {
+        return inGame;
     }
 
     /**
@@ -54,6 +65,6 @@ public class Player {
         if (obj == null) return false;
         else if (!(obj instanceof Player)) return false;
         Player that = (Player) obj;
-        return this.name.equals(that.name);
+        return this.name.equals(that.getName());
     }
 }

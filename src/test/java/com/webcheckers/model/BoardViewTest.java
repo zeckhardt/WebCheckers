@@ -46,7 +46,7 @@ public class BoardViewTest {
     @Test
     public void test_getId() {
         final BoardView CuT = new BoardView(id);
-        assertEquals(java.util.Optional.ofNullable(id), CuT.getId());
+        assertEquals(id, java.util.Optional.of(CuT.getId()).get());
     }
 
     @Test

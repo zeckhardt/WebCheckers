@@ -72,6 +72,16 @@ public class PlayerLobby {
         return players;
     }
 
+    public Player getPlayerByName(String name) {
+        for (Player p : players) {
+            if (p.getName().equals(name)){
+                return p;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Returns the value of the error message. Used for specifying the issue on
      * the sign in page.
