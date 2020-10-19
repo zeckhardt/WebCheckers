@@ -31,7 +31,7 @@
             <#list players as player>
                 <#if player.name != currentUser.name>
                     </br>
-                    <form action="/game" method="GET">
+                    <form action="/createGame" method="POST">
                         ${player.name} <button name="otherPlayer" type="submit" value=${player.name}> Play </button>
                     </form>
                 </#if>

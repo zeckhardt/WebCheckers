@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -30,6 +31,10 @@ public class Board {
 
     public ArrayList<Row> getRows() {
         return this.rows;
+    }
+
+    public Iterator<Row> iterator() {
+        return rows.iterator();
     }
 
     /**

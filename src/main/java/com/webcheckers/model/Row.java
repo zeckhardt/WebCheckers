@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A class to represent a row in a checkerboard
@@ -36,5 +37,9 @@ public class Row {
      */
     public Integer getIndex() {
         return index;
+    }
+
+    public Iterator<Space> iterator() {
+        return spaces.iterator();
     }
 }

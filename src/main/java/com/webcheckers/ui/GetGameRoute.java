@@ -5,7 +5,6 @@ import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.*;
@@ -35,31 +34,21 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute invoked.");
 
         final Map<String, Object> vm = new HashMap<>();
-        ArrayList<Player> players = playerLobby.getPlayers();
-        Player player1 = request.session().attribute("player");
-        String otherPlayerName = request.queryParams("otherPlayer");
-        Player player2 = playerLobby.getPlayerByName(otherPlayerName);
-        UUID uuid = UUID.randomUUID();
-        Game game = new Game(uuid, new Board());
-        gameCenter.addGame(game);
+        String uuidString = request.queryParams("id");
+        UUID uuid = UUID.fromString(uuidString);
+        Game game = gameCenter.getGameByUUID(uuid);
 
-        vm.put("title", "Game");
-        vm.put("gameID", uuid);
-        // TODO: Add error handling
-        int random = (int) Math.random() * 2;
-        if (random % 2 == 0) {
-            vm.put("redPlayer", player2);
-            vm.put("whitePlayer", player1);
-        }
-        else {
-            vm.put("redPlayer", player1);
-            vm.put("whitePlayer", player2);
-        }
-
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
+        vm.put("title", redPlayer.getName() + " vs. " + whitePlayer.getName());
+        vm.put("gameID", uuid.toString());
+        vm.put("board", game.getBoard());
+        vm.put("redPlayer", redPlayer);
+        vm.put("whitePlayer", whitePlayer);
         vm.put("viewMode", "PLAY");
-        vm.put("currentUser", player1);
+        vm.put("currentUser", request.session().attribute("player"));
+        vm.put("activeColor", "RED");
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
 }
-

@@ -21,6 +21,7 @@
 
     // Perform startup after the DOM has been built
     $(document).ready(function () {
+    console.log(gameData);
 
       // Configure global exception handler
       window.addEventListener('error', function (error) {

@@ -57,6 +57,7 @@ public class WebServer {
   public static final String HOME_URL = "/";
   public static final String SIGN_IN_URL = "/signin";
   public static final String GAME_URL = "/game";
+  public static final String CREATE_GAME_URL = "/createGame";
 
   //
   // Attributes
@@ -150,6 +151,7 @@ public class WebServer {
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, playerLobby));
     get(GAME_URL, new GetGameRoute(templateEngine, playerLobby, gameCenter));
+    post(CREATE_GAME_URL, new PostCreateGameRoute(templateEngine, playerLobby, gameCenter));
 
     //
     LOG.config("WebServer is initialized.");
