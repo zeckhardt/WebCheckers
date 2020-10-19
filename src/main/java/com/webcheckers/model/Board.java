@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * Representation of a board object
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
+    private Stack<Move> pendingMoves;
 
     /**
      * Create a new board
@@ -19,6 +21,8 @@ public class Board {
     public Board() {
         makeRows();
         initPieces();
+
+        pendingMoves = new Stack<>();
     }
 
     /**
@@ -58,6 +62,32 @@ public class Board {
                 col++;
             }
         }
+    }
+
+    public boolean validateMove(Move move, Player.Color currentTurn) {
+        return validateSquare(move.getEndRow(), move.getEndCell()) && validateSimpleMove(move, currentTurn);
+    }
+
+    public boolean validateSquare(int endRow, int endCell) {
+        return (endRow + endCell) % 2 != 0;
+    }
+
+    public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
+        if (pendingMoves.empty()) {
+            if (currentTurn == Player.Color.RED) {
+                return move.getEndRow() - move.getStartRow() == -1 &&
+                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+            } else {
+                return move.getEndRow() - move.getStartRow() == 1 &&
+                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public void addPendingMove(Move move) {
+        pendingMoves.push(move);
     }
 
     public ArrayList<Row> getRows() {

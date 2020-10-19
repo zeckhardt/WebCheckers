@@ -20,7 +20,7 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby, GameCenter gameCenter) {
+    public GetGameRoute(final TemplateEngine templateEngine, GameCenter gameCenter) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         //
