@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.webcheckers.app.GameCenter;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
@@ -51,9 +52,17 @@ public class PostValidateMoveRoute implements Route {
         int endRow = map.get("end").get("row");
         int endCell = map.get("end").get("cell");
         Move move = new Move(startRow, startCell, endRow, endCell);
-        boolean valid = game.getBoard().validateMove(move);
+        Board board = game.getBoard();
+        boolean valid = board.validateMove(move, game.getCurrentTurn());
 
-        Message message = (valid)? Message.info("Valid move.") : Message.error("Invalid move.");
+        Message message;
+        if (valid) {
+            message = Message.info("Valid move.");
+            board.addPendingMove(move);
+        } else {
+            message = Message.error("Invalid move.");
+        }
+
         return gson.toJson(message);
     }
 }
