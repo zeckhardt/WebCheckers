@@ -54,7 +54,6 @@ public class PostValidateMoveRoute implements Route {
         boolean valid = game.getBoard().validateMove(move);
 
         Message message = (valid)? Message.info("Valid move.") : Message.error("Invalid move.");
-        response.body(gson.toJson(message));
-        return 200;
+        return gson.toJson(message);
     }
 }
