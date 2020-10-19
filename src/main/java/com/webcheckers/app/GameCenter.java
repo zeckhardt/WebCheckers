@@ -1,5 +1,7 @@
 package com.webcheckers.app;
 
+import com.webcheckers.model.Game;
+
 import java.util.ArrayList;
 import java.util.UUID;
 

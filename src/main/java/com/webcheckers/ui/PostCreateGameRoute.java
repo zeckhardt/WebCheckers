@@ -1,11 +1,10 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.app.Game;
+import com.webcheckers.model.Game;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.*;
@@ -39,6 +38,11 @@ public class PostCreateGameRoute implements Route {
         String otherPlayerName = request.queryParams("otherPlayer");
         Player player2 = playerLobby.getPlayerByName(otherPlayerName);
 
+        if (player1.isInGame() || player2.isInGame()) {
+            response.redirect("/");
+            return 200;
+        }
+
         Game game;
         UUID uuid = UUID.randomUUID();
 
@@ -56,7 +60,7 @@ public class PostCreateGameRoute implements Route {
 
         gameCenter.addGame(game);
 
-        response.redirect("/game?id=" + uuid.toString());
+        response.redirect("/game/" + uuid.toString());
         return 200;
     }
 }

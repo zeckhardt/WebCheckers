@@ -56,7 +56,7 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String SIGN_IN_URL = "/signin";
-  public static final String GAME_URL = "/game";
+  public static final String GAME_URL = "/game/:id";
   public static final String CREATE_GAME_URL = "/createGame";
 
   //
@@ -147,7 +147,7 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameCenter));
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, playerLobby));
     get(GAME_URL, new GetGameRoute(templateEngine, playerLobby, gameCenter));

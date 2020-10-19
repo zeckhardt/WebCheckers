@@ -1,9 +1,8 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.app.Game;
+import com.webcheckers.model.Game;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
-    private PlayerLobby playerLobby;
     private GameCenter gameCenter;
 
     /**
@@ -24,7 +22,6 @@ public class GetGameRoute implements Route {
      */
     public GetGameRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby, GameCenter gameCenter) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         //
         LOG.config("GetGameRoute is initialized.");
@@ -34,9 +31,11 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute invoked.");
 
         final Map<String, Object> vm = new HashMap<>();
-        String uuidString = request.queryParams("id");
+        String uuidString = request.params("id");
         UUID uuid = UUID.fromString(uuidString);
         Game game = gameCenter.getGameByUUID(uuid);
+
+        //TODO: Add the other view modes for nonplayers
 
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();

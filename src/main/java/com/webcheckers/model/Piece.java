@@ -7,11 +7,16 @@ package com.webcheckers.model;
  */
 public class Piece {
     // Enums for the possible states of a Piece
-    private enum Type {SINGLE, KING}
-    private enum Color {RED, WHITE}
+    public enum Type {SINGLE, KING}
+    public enum Color {RED, WHITE}
 
     private Type type;
     private Color color;
+
+    public Piece(Type type, Color color) {
+        this.type = type;
+        this.color = color;
+    }
 
     /**
      * Gets the type of the piece

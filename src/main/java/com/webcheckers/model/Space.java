@@ -13,6 +13,10 @@ public class Space {
         this.cellIdx = cellIdx;
     }
 
+    public void placePiece(Piece piece) {
+        this.piece = piece;
+    }
+
     /**
      * Gets the cell index
      * @return the integer of the cell's index

@@ -1,4 +1,5 @@
 package com.webcheckers.ui;
+import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.ModelAndView;
@@ -26,6 +27,7 @@ public class GetHomeRouteTest {
     private TemplateEngine engine;
     private Response response;
     private PlayerLobby lobby;
+    private GameCenter gameCenter;
     private Session session;
     private Player player;
 
@@ -34,10 +36,11 @@ public class GetHomeRouteTest {
         request = mock(Request.class);
         engine = mock(TemplateEngine.class);
         lobby = mock(PlayerLobby.class);
+        gameCenter = mock(GameCenter.class);
         response = mock(Response.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
-        CuT = new GetHomeRoute(engine,lobby);
+        CuT = new GetHomeRoute(engine,lobby,gameCenter);
     }
 
     @Test

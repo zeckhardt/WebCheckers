@@ -1,7 +1,4 @@
-package com.webcheckers.app;
-
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
+package com.webcheckers.model;
 
 import java.util.UUID;
 

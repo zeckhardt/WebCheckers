@@ -18,6 +18,7 @@ public class Board {
      */
     public Board() {
         makeRows();
+        initPieces();
     }
 
     /**
@@ -26,6 +27,36 @@ public class Board {
     private void makeRows() {
         for (int i = 0; i < 8; i++) {
             this.rows.add(new Row(i));
+        }
+    }
+
+    private void initPieces() {
+        for (int row = 0; row < 3; row++) {
+            int col = 0;
+            Iterator<Space> spaces = rows.get(row).iterator();
+            while (spaces.hasNext()) {
+                if ((col + row) % 2 != 0) {
+                    spaces.next().placePiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                }
+                else {
+                    spaces.next(); // discard the space from the iterator
+                }
+                col++;
+            }
+        }
+
+        for (int row = 5; row < 8; row++) {
+            int col = 0;
+            Iterator<Space> spaces = rows.get(row).iterator();
+            while (spaces.hasNext()) {
+                if ((col + row) % 2 != 0) {
+                    spaces.next().placePiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+                }
+                else {
+                    spaces.next(); // discard the space from the iterator
+                }
+                col++;
+            }
         }
     }
 

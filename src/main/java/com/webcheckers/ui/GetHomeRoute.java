@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Game;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -29,6 +31,7 @@ public class GetHomeRoute implements Route {
 
   private final TemplateEngine templateEngine;
   private PlayerLobby playerLobby;
+  private GameCenter gameCenter;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -36,9 +39,10 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby) {
+  public GetHomeRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby, GameCenter gameCenter) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -67,6 +71,15 @@ public class GetHomeRoute implements Route {
       vm.put("currentUser", player);
       vm.put("username", player.getName());
       vm.put("players", players);
+
+      if (player.isInGame()) {
+        for (Game g : gameCenter.getGames()) {
+          if (player.equals(g.getRedPlayer()) || player.equals(g.getWhitePlayer())) {
+            response.redirect("/game/" + g.getUUID().toString());
+            return 200;
+          }
+        }
+      }
     }
     else {
       vm.put("numPlayers", players.size());
