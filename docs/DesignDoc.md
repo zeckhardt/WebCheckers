@@ -23,11 +23,11 @@ against other signed in users. To get started, the user enters a unique username
 now ready to play by either selecting or being selected by another user.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> _The purpose of this project is to bring people together to play the game of checkers.
+>WebCheckers is meant to be an easy to use application that allows users to choose their 
+>challenge whoever they'd like._
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
@@ -38,18 +38,20 @@ now ready to play by either selecting or being selected by another user.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> _The MVP of the project WebCheckers is as follows; allow the player to sign in using a unique username, Play a game of
+>American rule set checkers with the opponent of their choice, and then sign out of the game when done._
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+> _Players are able to play checkers using the American rule set. This rule set includes simple forward movement, single
+>and multiple capture moves, kinging of pieces when they reach the end of the board. The other important features are the
+>sign in and out functions, giving players their own unique name._
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+> _Multi-game creation: This enhancement allows players join multiple games at the same time. The player can then select
+>which game to play in and make moves in._
+>
+>_Request Hint: This enhancement allows the player to click a button and ask for help._
 
 
 ## Application Domain
@@ -144,8 +146,12 @@ with the WebCheckers application.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+> _The current code coverage for the project.
+>![Application Tier Testing](test_img1.png)_
+
+>_![Model Tier Testing](test_img3.png)_
+
+>_![UI Tier Testing](test_img2.png)_
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
