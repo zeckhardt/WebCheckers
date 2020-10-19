@@ -1,0 +1,41 @@
+package com.webcheckers.model;
+
+/**
+ * A class to represent a space on the checkerboard.
+ *
+ * @author Klaus Curde
+ */
+public class Space {
+    private Integer cellIdx;
+    public Piece piece;
+
+    public Space(int cellIdx) {
+        this.cellIdx = cellIdx;
+    }
+
+    public void placePiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    /**
+     * Gets the cell index
+     * @return the integer of the cell's index
+     */
+    public Integer getCellIdx() {
+        return this.cellIdx;
+    }
+
+    /**
+     * Shows whether the space is a valid location for a piece to be placed.
+     * i.e. there is no piece already on it
+     *
+     * @return A boolean saying whether there is already a piece
+     */
+    public Boolean isValid() {
+        return this.piece == null;
+    }
+
+    public Piece getPiece() {
+        return this.piece;
+    }
+}

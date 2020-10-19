@@ -17,7 +17,17 @@ public class GetSignInRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    private static final Message SIGNIN_MSG = Message.info("Please sign in to access the site's full functionality!");
+    /**
+     * Attribute strings
+     */
+    protected static final String TITLE_ATTR = "title";
+    protected static final String MSG_ATTR = "message";
+
+    /**
+     * Value strings
+     */
+    protected static final String TITLE = "Sign In";
+    protected static final Message SIGNIN_MSG = Message.info("Please sign in to access the site's full functionality!");
 
     private final TemplateEngine templateEngine;
 
@@ -49,9 +59,8 @@ public class GetSignInRoute implements Route {
         LOG.finer("GetSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Sign In");
-
-        vm.put("message", SIGNIN_MSG);
+        vm.put(TITLE_ATTR, TITLE);
+        vm.put(MSG_ATTR, SIGNIN_MSG);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));

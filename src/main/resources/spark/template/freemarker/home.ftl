@@ -30,7 +30,10 @@
             Players online:
             <#list players as player>
                 <#if player.name != currentUser.name>
-                    </br> ${player.name}
+                    </br>
+                    <form action="/createGame" method="POST">
+                        ${player.name} <button name="otherPlayer" type="submit" value=${player.name}> Play </button>
+                    </form>
                 </#if>
             </#list>
         <#else>

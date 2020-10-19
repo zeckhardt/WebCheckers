@@ -4,6 +4,8 @@ import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 /**
@@ -70,6 +72,16 @@ public class PlayerLobby {
      */
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayerByName(String name) {
+        for (Player p : players) {
+            if (p.getName().equals(name)){
+                return p;
+            }
+        }
+
+        return null;
     }
 
     /**

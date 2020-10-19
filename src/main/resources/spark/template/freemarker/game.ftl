@@ -7,7 +7,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
   window.gameData = {
-    "gameID" : ${gameID!'null'},
+    "gameID" : "${gameID!'null'}",
     "currentUser" : "${currentUser.name}",
     "viewMode" : "${viewMode}",
     "modeOptions" : ${modeOptionsAsJSON!'{}'},
@@ -61,25 +61,48 @@
         <div class="game-board">
           <table id="game-board">
             <tbody>
-            <#list board.iterator() as row>
-              <tr data-row="${row.index}">
-              <#list row.iterator() as space>
-                <td data-cell="${space.cellIdx}"
-                    <#if space.isValid() >
-                    class="Space"
-                    </#if>
-                    >
-                <#if space.piece??>
-                  <div class="Piece"
-                       id="piece-${row.index}-${space.cellIdx}"
-                       data-type="${space.piece.type}"
-                       data-color="${space.piece.color}">
-                  </div>
-                </#if>
-                </td>
-              </#list>
-              </tr>
-            </#list>
+              <#if redPlayer.equals(currentUser)>
+                <#list board.iterator() as row>
+                  <tr data-row="${row.index}">
+                    <#list row.iterator() as space>
+                      <td data-cell="${space.cellIdx}"
+                        <#if space.isValid() >
+                          class="Space"
+                        </#if>
+                      >
+                      <#if space.piece??>
+                        <div class="Piece"
+                          id="piece-${row.index}-${space.cellIdx}"
+                          data-type="${space.piece.type}"
+                          data-color="${space.piece.color}">
+                        </div>
+                      </#if>
+                      </td>
+                    </#list>
+                  </tr>
+                </#list>
+              <#else>
+                <#list board.iterator()?sequence?reverse as row>
+                  <tr data-row="${row.index}">
+                    <#list row.iterator()?sequence?reverse as space>
+                      <td data-cell="${space.cellIdx}"
+                        <#if space.isValid() >
+                          class="Space"
+                        </#if>
+                      >
+                      <#if space.piece??>
+                        <div class="Piece"
+                          id="piece-${row.index}-${space.cellIdx}"
+                          data-type="${space.piece.type}"
+                          data-color="${space.piece.color}">
+                        </div>
+                      </#if>
+                      </td>
+                    </#list>
+                  </tr>
+                </#list>
+            </#if>
+
             </tbody>
           </table>
         </div>

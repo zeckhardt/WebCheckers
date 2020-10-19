@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -55,6 +56,8 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String SIGN_IN_URL = "/signin";
+  public static final String GAME_URL = "/game/:id";
+  public static final String CREATE_GAME_URL = "/createGame";
 
   //
   // Attributes
@@ -63,6 +66,7 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private PlayerLobby playerLobby;
+  private GameCenter gameCenter;
 
   //
   // Constructor
@@ -79,7 +83,7 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final TemplateEngine templateEngine, final Gson gson, PlayerLobby playerLobby) {
+  public WebServer(final TemplateEngine templateEngine, final Gson gson, PlayerLobby playerLobby, GameCenter gameCenter) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
@@ -88,6 +92,7 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = playerLobby;
+    this.gameCenter = gameCenter;
   }
 
   //
@@ -142,9 +147,11 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameCenter));
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, playerLobby));
+    get(GAME_URL, new GetGameRoute(templateEngine, playerLobby, gameCenter));
+    post(CREATE_GAME_URL, new PostCreateGameRoute(templateEngine, playerLobby, gameCenter));
 
     //
     LOG.config("WebServer is initialized.");
