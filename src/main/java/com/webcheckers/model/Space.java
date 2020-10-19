@@ -38,4 +38,12 @@ public class Space {
     public Piece getPiece() {
         return this.piece;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        else if (!(other instanceof Space)) return false;
+        Space that = (Space) other;
+        return this.cellIdx == that.getCellIdx() && this.piece.equals(that.getPiece());
+    }
 }

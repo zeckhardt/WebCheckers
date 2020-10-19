@@ -108,6 +108,13 @@ public class Board {
         if (other == null) return false;
         else if (!(other instanceof Board)) return false;
         Board that = (Board) other;
-        return this.rows.equals(that.getRows());
+
+        for (int i = 0; i < this.rows.size(); i++) {
+            if (!this.rows.equals(that.getRows())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

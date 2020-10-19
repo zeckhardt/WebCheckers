@@ -39,7 +39,26 @@ public class Row {
         return index;
     }
 
+    public ArrayList<Space> getSpaces() {
+        return spaces;
+    }
+
     public Iterator<Space> iterator() {
         return spaces.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        else if (!(other instanceof Row)) return false;
+        Row that = (Row) other;
+
+        for (int i = 0; i < spaces.size(); i++) {
+            if (!this.spaces.get(i).equals(that.getSpaces().get(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

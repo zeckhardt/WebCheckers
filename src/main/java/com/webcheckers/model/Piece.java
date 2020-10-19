@@ -33,4 +33,12 @@ public class Piece {
     public Color getColor() {
         return this.color;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        else if (!(other instanceof Piece)) return false;
+        Piece that = (Piece) other;
+        return this.type == that.getType() && this.color == that.getColor();
+    }
 }
