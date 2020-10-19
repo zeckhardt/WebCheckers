@@ -1,13 +1,12 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.GameCenter;
-import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -15,15 +14,17 @@ import java.util.logging.Logger;
 public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
     private GameCenter gameCenter;
+    private Gson gson;
 
     /**
      * Create the Spark Route (UI controller) to handle {@code POST /checkTurn} HTTP requests.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param gameCenter
+     *   the application game center
      */
-    public PostCheckTurnRoute(GameCenter gameCenter) {
+    public PostCheckTurnRoute(GameCenter gameCenter, Gson gson) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
+        this.gson = Objects.requireNonNull(gson, "gson is required");
         //
         LOG.config("PostCheckTurnRoute is initialized.");
     }
@@ -42,7 +43,8 @@ public class PostCheckTurnRoute implements Route {
             turn = player.equals(game.getWhitePlayer());
         }
 
-        response.body("{ \"message\": " + ((turn)? "\"true\"" : "\"false\""));
+        Message message = Message.info(((turn)? "\"true\"" : "\"false\""));
+        response.body(gson.toJson(message));
         return 200;
     }
 }

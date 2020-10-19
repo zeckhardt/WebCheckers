@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * Representation of a board object
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
+    private Stack<Move> pendingMoves;
 
     /**
      * Create a new board
@@ -19,6 +21,8 @@ public class Board {
     public Board() {
         makeRows();
         initPieces();
+
+        pendingMoves = new Stack<>();
     }
 
     /**
@@ -58,6 +62,14 @@ public class Board {
                 col++;
             }
         }
+    }
+
+    public boolean validateMove(Move move) {
+        return validateSquare(move.getEndRow(), move.getEndCell());
+    }
+
+    public boolean validateSquare(int endRow, int endCell) {
+        return (endRow + endCell) % 2 != 0;
     }
 
     public ArrayList<Row> getRows() {
