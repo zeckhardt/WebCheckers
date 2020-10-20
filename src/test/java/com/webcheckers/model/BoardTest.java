@@ -48,11 +48,13 @@ public class BoardTest {
 
     @Test
     public void test_equals() {
-        final int id = 0;
+
         final Board CuT0 = new Board();
         final Board CuT1 = new Board();
-        assertTrue(CuT0.equals(CuT1));
-        assertTrue(CuT1.equals(CuT0));
+        CuT0.hashCode();
+        CuT1.hashCode();
+        assertEquals(true,CuT0.equals(CuT1));
+        assertEquals(true,CuT1.equals(CuT0));
     }
 
 }

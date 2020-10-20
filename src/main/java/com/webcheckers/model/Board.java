@@ -14,6 +14,7 @@ public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
     private Stack<Move> pendingMoves;
+    private String id = "";
 
     /**
      * Create a new board
@@ -98,16 +99,16 @@ public class Board {
         return rows.iterator();
     }
 
-    /**
-     * Checks if the boards are the same.
-     * @param other the other board to look at
-     * @return if same
-     */
     @Override
-    public boolean equals(Object other) {
-        if (other == null) return false;
-        else if (!(other instanceof Board)) return false;
-        Board that = (Board) other;
-        return this.rows.equals(that.getRows());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(id, board.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
