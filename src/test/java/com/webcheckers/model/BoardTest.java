@@ -17,6 +17,7 @@ import static org.mockito.Mockito.mock;
  *
  * @author Klaus Curde
  */
+@Tag("Model-Tier")
 public class BoardTest {
     // CuT
     private Board CuT;
@@ -44,6 +45,29 @@ public class BoardTest {
     public void test_getRows() {
         final Board CuT = new Board();
         assertEquals(CuT.getRows().size(), 8);
+    }
+
+    @Test
+    public void testValidateSquare(){ assertTrue(CuT.validateSquare(2,3)); }
+
+    @Test
+    public void testValidateMove() {
+        Move move = new Move(6,1,5,2);
+        assertTrue(CuT.validateMove(move, Player.Color.RED));
+    }
+
+    @Test
+    public void testValidateSimpleMove(){
+        Move move = new Move(6,1,5,2);
+        assertTrue(CuT.validateSimpleMove(move,Player.Color.RED));
+    }
+
+    @Test
+    public void testAddPendingMove(){
+        Move move = new Move(6,1,5,2);
+        CuT.addPendingMove(move);
+        ArrayList<Move> pendingMoves = CuT.getPendingMoves();
+        assertEquals(1,pendingMoves.size());
     }
 
     @Test

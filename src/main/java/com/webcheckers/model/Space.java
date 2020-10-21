@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * A class to represent a space on the checkerboard.
  *
@@ -48,10 +50,16 @@ public class Space {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == null) return false;
-        else if (!(other instanceof Space)) return false;
-        Space that = (Space) other;
-        return this.cellIdx == that.getCellIdx() && this.piece.equals(that.getPiece());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Space space = (Space) o;
+        return Objects.equals(cellIdx, space.cellIdx) &&
+                Objects.equals(piece, space.piece);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cellIdx, piece);
     }
 }

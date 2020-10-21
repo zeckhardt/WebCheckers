@@ -32,4 +32,13 @@ public class RowTest {
     public void testGetIndex() {
         assertEquals(8, (int) CuT.getIndex());
     }
+
+    @Test
+    public void testEquals(){
+        Row CuT1 = new Row(5);
+        Row CuT2 = new Row(5);
+
+        assertEquals(true,CuT1.equals(CuT2));
+        assertEquals(true,CuT2.equals(CuT1));
+    }
 }

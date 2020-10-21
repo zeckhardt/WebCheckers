@@ -48,4 +48,12 @@ public class SpaceTest {
         CuT.placePiece(piece);
         assertEquals(piece,CuT.getPiece());
     }
+
+    @Test
+    public void testEquals(){
+        Space CuT1 = new Space(5);
+        Space CuT2 = new Space(5);
+        assertEquals(true, CuT1.equals(CuT2));
+        assertEquals(true, CuT2.equals(CuT1));
+    }
 }

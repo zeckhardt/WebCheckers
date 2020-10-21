@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * A class to represent a row in a checkerboard
@@ -12,6 +13,7 @@ import java.util.Iterator;
 public class Row {
     private Integer index;
     private ArrayList<Space> spaces = new ArrayList<>();
+    private int id;
 
     /**
      * Create a row object
@@ -48,17 +50,15 @@ public class Row {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == null) return false;
-        else if (!(other instanceof Row)) return false;
-        Row that = (Row) other;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Row row = (Row) o;
+        return id == row.id;
+    }
 
-        for (int i = 0; i < spaces.size(); i++) {
-            if (!this.spaces.get(i).equals(that.getSpaces().get(i))) {
-                return false;
-            }
-        }
-
-        return true;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

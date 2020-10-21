@@ -104,6 +104,10 @@ public class Board {
         pendingMoves.add(move);
     }
 
+    public ArrayList<Move> getPendingMoves(){
+        return pendingMoves;
+    }
+
     public void backupMove() {
         pendingMoves.remove(pendingMoves.size() - 1);
     }

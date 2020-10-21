@@ -27,6 +27,20 @@ public class PlayerTest {
     }
 
     @Test
+    public void testGetColor(){
+        final Player CuT = new Player("test");
+        CuT.joinGame(Player.Color.RED);
+        assertEquals(Player.Color.RED, CuT.getColor());
+    }
+
+    @Test
+    public void testIsInGame(){
+        final Player CuT = new Player("test");
+        CuT.joinGame(Player.Color.WHITE);
+        assertTrue(CuT.isInGame());
+    }
+
+    @Test
     public void test_equals() {
         final String name = "test";
         final Player CuT1 = new Player(name);

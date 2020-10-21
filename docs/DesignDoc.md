@@ -154,11 +154,8 @@ with the WebCheckers application.
 >_![UI Tier Testing](test_img2.png)_
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+> _Currently all of the user stories have past the acceptance criteria. The only untested stories are those that
+>have not been developed yet. There was not instances of acceptance criteria failing._
 
 ### Unit Testing and Code Coverage
 > _Discuss your unit testing strategy. Report on the code coverage
