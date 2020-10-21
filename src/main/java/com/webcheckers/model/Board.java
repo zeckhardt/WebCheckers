@@ -1,9 +1,6 @@
 package com.webcheckers.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Representation of a board object
@@ -13,8 +10,8 @@ import java.util.Stack;
 public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
-    private Stack<Move> pendingMoves;
-    private String id = "";
+    private ArrayList<Move> pendingMoves;
+
 
     /**
      * Create a new board
@@ -23,7 +20,7 @@ public class Board {
         makeRows();
         initPieces();
 
-        pendingMoves = new Stack<>();
+        pendingMoves = new ArrayList<>();
     }
 
     /**
@@ -65,6 +62,22 @@ public class Board {
         }
     }
 
+    public void submitMove() {
+        for (Move m : pendingMoves) {
+            int startRow = m.getStartRow();
+            int startCell = m.getStartCell();
+            int endRow = m.getEndRow();
+            int endCell = m.getEndCell();
+
+            Space startSpace = rows.get(startRow).getSpaces().get(startCell);
+            Piece p = startSpace.removePiece();
+            Space endSpace = rows.get(endRow).getSpaces().get(endCell);
+            endSpace.placePiece(p);
+        }
+
+        pendingMoves.clear();
+    }
+
     public boolean validateMove(Move move, Player.Color currentTurn) {
         return validateSquare(move.getEndRow(), move.getEndCell()) && validateSimpleMove(move, currentTurn);
     }
@@ -74,7 +87,7 @@ public class Board {
     }
 
     public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
-        if (pendingMoves.empty()) {
+        if (pendingMoves.isEmpty()) {
             if (currentTurn == Player.Color.RED) {
                 return move.getEndRow() - move.getStartRow() == -1 &&
                         Math.abs(move.getEndCell() - move.getStartCell()) == 1;
@@ -88,7 +101,11 @@ public class Board {
     }
 
     public void addPendingMove(Move move) {
-        pendingMoves.push(move);
+        pendingMoves.add(move);
+    }
+
+    public void backupMove() {
+        pendingMoves.remove(pendingMoves.size() - 1);
     }
 
     public ArrayList<Row> getRows() {
@@ -100,15 +117,17 @@ public class Board {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Board board = (Board) o;
-        return Objects.equals(id, board.id);
-    }
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        else if (!(other instanceof Board)) return false;
+        Board that = (Board) other;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+        for (int i = 0; i < this.rows.size(); i++) {
+            if (!this.rows.equals(that.getRows())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

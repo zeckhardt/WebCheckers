@@ -40,6 +40,10 @@ public class Player {
         return name;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     /**
      * Gets whether the player is in a game
      * @return if in a game

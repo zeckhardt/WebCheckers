@@ -31,7 +31,7 @@ public class GetGameRoute implements Route {
         LOG.finer("GetGameRoute invoked.");
 
         final Map<String, Object> vm = new HashMap<>();
-        String uuidString = request.params("id");
+        String uuidString = request.queryParams("gameID");
         UUID uuid = UUID.fromString(uuidString);
         Game game = gameCenter.getGameByUUID(uuid);
 
@@ -46,7 +46,7 @@ public class GetGameRoute implements Route {
         vm.put("whitePlayer", whitePlayer);
         vm.put("viewMode", "PLAY");
         vm.put("currentUser", request.session().attribute("player"));
-        vm.put("activeColor", "RED");
+        vm.put("activeColor", game.getCurrentTurn().toString());
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }

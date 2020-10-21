@@ -75,7 +75,7 @@ public class GetHomeRoute implements Route {
       if (player.isInGame()) {
         for (Game g : gameCenter.getGames()) {
           if (player.equals(g.getRedPlayer()) || player.equals(g.getWhitePlayer())) {
-            response.redirect("/game/" + g.getUUID().toString());
+            response.redirect("/game?gameID=" + g.getUUID().toString());
             return 200;
           }
         }

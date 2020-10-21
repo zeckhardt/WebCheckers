@@ -48,7 +48,6 @@ public class BoardTest {
 
     @Test
     public void test_equals() {
-
         final Board CuT0 = new Board();
         final Board CuT1 = new Board();
         CuT0.hashCode();

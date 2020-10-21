@@ -13,10 +13,6 @@ public class Space {
         this.cellIdx = cellIdx;
     }
 
-    public void placePiece(Piece piece) {
-        this.piece = piece;
-    }
-
     /**
      * Gets the cell index
      * @return the integer of the cell's index
@@ -37,5 +33,25 @@ public class Space {
 
     public Piece getPiece() {
         return this.piece;
+    }
+
+    public void placePiece(Piece piece) {
+        if (this.piece == null) {
+            this.piece = piece;
+        }
+    }
+
+    public Piece removePiece() {
+        Piece p = piece;
+        piece = null;
+        return p;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        else if (!(other instanceof Space)) return false;
+        Space that = (Space) other;
+        return this.cellIdx == that.getCellIdx() && this.piece.equals(that.getPiece());
     }
 }
