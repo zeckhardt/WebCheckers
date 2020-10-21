@@ -12,6 +12,7 @@ public class Board {
     private ArrayList<Row> rows = new ArrayList<>();
     private ArrayList<Move> pendingMoves;
 
+
     /**
      * Create a new board
      */
@@ -115,11 +116,6 @@ public class Board {
         return rows.iterator();
     }
 
-    /**
-     * Checks if the boards are the same.
-     * @param other the other board to look at
-     * @return if same
-     */
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;

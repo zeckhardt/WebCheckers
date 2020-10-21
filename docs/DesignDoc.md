@@ -9,23 +9,25 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Team A - Tomato
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Zachary Eckhardt
+  * Aidan Lynch
+  * Klaus Curde
+  * Adam Neulight
 
 ## Executive Summary
 
-This is a summary of the project.
+This WebCheckers application utilizes the Java Spark framework. The user goes head to head in a game of checkers
+against other signed in users. To get started, the user enters a unique username. Once a username is established they
+now ready to play by either selecting or being selected by another user.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> _The purpose of this project is to bring people together to play the game of checkers.
+>WebCheckers is meant to be an easy to use application that allows users to choose their 
+>challenge whoever they'd like._
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
@@ -36,29 +38,30 @@ This is a summary of the project.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> _The MVP of the project WebCheckers is as follows; allow the player to sign in using a unique username, Play a game of
+>American rule set checkers with the opponent of their choice, and then sign out of the game when done._
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+> _Players are able to play checkers using the American rule set. This rule set includes simple forward movement, single
+>and multiple capture moves, kinging of pieces when they reach the end of the board. The other important features are the
+>sign in and out functions, giving players their own unique name._
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+> _Multi-game creation: This enhancement allows players join multiple games at the same time. The player can then select
+>which game to play in and make moves in._
+>
+>_Request Hint: This enhancement allows the player to click a button and ask for help._
 
 
 ## Application Domain
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain-model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+> _Each game being played is on a single board with two players. Each player has the ability to control 12 pieces of
+>their assigned color. The pieces are then placed in a pattern on the board composed of 64 squares._
 
 
 ## Architecture and Design
@@ -87,10 +90,14 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](state-diagram.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+> _The interface is comprised of a few web pages with the addition of other states that indicate the user's current
+>status. The user starts out disconnected (no HTTP connection). Once connected the user is on the home screen, 
+>there is then a prompt to sign in, using a username via the sign-in page. A player then awaits game creation by either
+>via selecting a user to play against. The red player is then prompted to make a move and waits for the opponent user to
+>take their turn. The players swap states depending on whose turn it is. Once a winner is established users are redirected
+>back to the home screen._
 
 
 ### UI Tier
@@ -139,8 +146,12 @@ with the WebCheckers application.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+> _The current code coverage for the project.
+>![Application Tier Testing](test_img1.png)_
+
+>_![Model Tier Testing](test_img3.png)_
+
+>_![UI Tier Testing](test_img2.png)_
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
