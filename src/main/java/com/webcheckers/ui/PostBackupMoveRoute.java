@@ -5,13 +5,16 @@ import com.webcheckers.app.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public class PostCheckTurnRoute implements Route {
+public class PostBackupMoveRoute implements Route {
+
     private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
     private GameCenter gameCenter;
     private Gson gson;
@@ -22,15 +25,15 @@ public class PostCheckTurnRoute implements Route {
      * @param gameCenter
      *   the application game center
      */
-    public PostCheckTurnRoute(GameCenter gameCenter, Gson gson) {
+    public PostBackupMoveRoute(GameCenter gameCenter, Gson gson) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.gson = Objects.requireNonNull(gson, "gson is required");
         //
-        LOG.config("PostCheckTurnRoute is initialized.");
+        LOG.config("PostBackupMoveRoute is initialized.");
     }
 
     public Object handle(Request request, Response response) {
-        LOG.finer("PostCheckTurnRoute invoked.");
+        LOG.finer("PostBackupMoveRoute invoked.");
 
         Player player = request.session().attribute("player");
         String uuidString = request.queryParams("gameID");
@@ -38,12 +41,18 @@ public class PostCheckTurnRoute implements Route {
         boolean turn = false;
         if (game.getCurrentTurn() == Player.Color.RED) {
             turn = player.equals(game.getRedPlayer());
-        }
-        else {
+        } else {
             turn = player.equals(game.getWhitePlayer());
         }
 
-        Message message = Message.info(((turn)? "\"true\"" : "\"false\""));
+        Message message;
+        if (turn) {
+            game.getBoard().backupMove();
+            message = Message.info("Backed up move.");
+        } else {
+            message = Message.error("It is not your turn.");
+        }
+
         return gson.toJson(message);
     }
 }

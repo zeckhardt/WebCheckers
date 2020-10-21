@@ -60,6 +60,7 @@ public class WebServer {
   public static final String CREATE_GAME_URL = "/createGame";
   public static final String CHECK_TURN_URL = "/checkTurn";
   public static final String VALIDATE_MOVE_URL = "/validateMove";
+  public static final String BACKUP_MOVE_URL = "/backupMove";
 
   //
   // Attributes
@@ -156,6 +157,7 @@ public class WebServer {
     post(CREATE_GAME_URL, new PostCreateGameRoute(templateEngine, playerLobby, gameCenter));
     post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson));
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
 
     //
     LOG.config("WebServer is initialized.");

@@ -90,6 +90,10 @@ public class Board {
         pendingMoves.push(move);
     }
 
+    public void backupMove() {
+        pendingMoves.pop();
+    }
+
     public ArrayList<Row> getRows() {
         return this.rows;
     }
