@@ -73,17 +73,26 @@ public class Board {
             Piece p = startSpace.removePiece();
             Space endSpace = rows.get(endRow).getSpaces().get(endCell);
             endSpace.placePiece(p);
+
+            if (Math.abs(startRow - endRow) == 2) {
+                int midRow = (startRow + endRow) / 2;
+                int midCell = (startCell + endCell) / 2;
+                Space midSpace = rows.get(midRow).getSpaces().get(midCell);
+                midSpace.removePiece();
+            }
         }
 
         pendingMoves.clear();
     }
 
     public boolean validateMove(Move move, Player.Color currentTurn) {
-        return validateSquare(move.getEndRow(), move.getEndCell()) && validateSimpleMove(move, currentTurn);
+        return validateSquare(move.getEndRow(), move.getEndCell()) &&
+                (validateSimpleMove(move, currentTurn) ||
+                validateJumpMove(move, currentTurn));
     }
 
     public boolean validateSquare(int endRow, int endCell) {
-        return (endRow + endCell) % 2 != 0;
+        return (endRow + endCell) % 2 != 0 && rows.get(endRow).getSpaces().get(endCell).getPiece() == null;
     }
 
     public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
@@ -94,6 +103,27 @@ public class Board {
             } else {
                 return move.getEndRow() - move.getStartRow() == 1 &&
                         Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean validateJumpMove(Move move, Player.Color currentTurn) {
+        if (pendingMoves.isEmpty()) {
+            int midRow = (move.getStartRow() + move.getEndRow()) / 2;
+            int midCell = (move.getStartCell() + move.getEndCell()) / 2;
+            Piece piece = rows.get(midRow).getSpaces().get(midCell).getPiece();
+            if (currentTurn == Player.Color.RED) {
+                return move.getEndRow() - move.getStartRow() == -2 &&
+                        Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                        piece != null &&
+                        piece.getColor() == Piece.Color.WHITE;
+            } else {
+                return move.getEndRow() - move.getStartRow() == 2 &&
+                        Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                        piece != null &&
+                        piece.getColor() == Piece.Color.RED;
             }
         } else {
             return false;
