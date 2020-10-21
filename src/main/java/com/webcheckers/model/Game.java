@@ -30,6 +30,10 @@ public class Game {
         return currentTurn;
     }
 
+    public void changeTurn() {
+        currentTurn = (currentTurn == Player.Color.RED)? Player.Color.WHITE : Player.Color.RED;
+    }
+
     public Player getRedPlayer() {
         return redPlayer;
     }

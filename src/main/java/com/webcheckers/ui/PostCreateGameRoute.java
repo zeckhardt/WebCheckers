@@ -48,19 +48,19 @@ public class PostCreateGameRoute implements Route {
 
         int random = (int) (Math.random() * 2);
         if (random % 2 == 0) {
-            game = new Game(uuid, new Board(), player1, player2);
             player1.joinGame(Player.Color.RED);
             player2.joinGame(Player.Color.WHITE);
+            game = new Game(uuid, new Board(), player1, player2);
         }
         else {
-            game = new Game(uuid, new Board(), player2, player1);
             player2.joinGame(Player.Color.RED);
             player1.joinGame(Player.Color.WHITE);
+            game = new Game(uuid, new Board(), player2, player1);
         }
 
         gameCenter.addGame(game);
 
-        response.redirect("/game/" + uuid.toString());
+        response.redirect("/game?gameID=" + uuid.toString());
         return 200;
     }
 }

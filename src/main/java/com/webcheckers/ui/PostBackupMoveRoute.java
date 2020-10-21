@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class PostBackupMoveRoute implements Route {
 
-    private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
     private GameCenter gameCenter;
     private Gson gson;
 
