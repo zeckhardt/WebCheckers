@@ -79,9 +79,9 @@ public class Board {
                 int midCell = (startCell + endCell) / 2;
                 Space midSpace = rows.get(midRow).getSpaces().get(midCell);
                 midSpace.removePiece();
+                checkKing(p,m);
             }
         }
-
         pendingMoves.clear();
     }
 
@@ -127,6 +127,17 @@ public class Board {
             }
         } else {
             return false;
+        }
+    }
+
+    public void checkKing(Piece piece, Move move){
+        if(piece != null && move != null){
+            if(piece.getColor() == Piece.Color.RED && move.getEndRow() == 0 && piece.getType() == Piece.Type.SINGLE) {
+                piece.toKing();
+            }
+            if(piece.getColor() == Piece.Color.WHITE && move.getEndRow() == 8 && piece.getType() == Piece.Type.SINGLE) {
+                piece.toKing();
+            }
         }
     }
 
