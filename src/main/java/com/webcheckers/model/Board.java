@@ -79,8 +79,8 @@ public class Board {
                 int midCell = (startCell + endCell) / 2;
                 Space midSpace = rows.get(midRow).getSpaces().get(midCell);
                 midSpace.removePiece();
-                checkKing(p,m);
             }
+            checkKing(p,m);
         }
         pendingMoves.clear();
     }
@@ -96,13 +96,21 @@ public class Board {
     }
 
     public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
+        int startRow = move.getStartRow();
+        int startCell = move.getStartCell();
+        Space space = rows.get(startRow).getSpaces().get(startCell);
+
         if (pendingMoves.isEmpty()) {
             if (currentTurn == Player.Color.RED) {
-                return move.getEndRow() - move.getStartRow() == -1 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                if(space.getPiece().getType() == Piece.Type.SINGLE) {
+                    return move.getEndRow() - move.getStartRow() == -1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                } else { return true; }
             } else {
-                return move.getEndRow() - move.getStartRow() == 1 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                if(space.getPiece().getType() == Piece.Type.SINGLE) {
+                    return move.getEndRow() - move.getStartRow() == 1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                } else { return true; }
             }
         } else {
             return false;
@@ -132,10 +140,10 @@ public class Board {
 
     public void checkKing(Piece piece, Move move){
         if(piece != null && move != null){
-            if(piece.getColor() == Piece.Color.RED && move.getEndRow() == 0 && piece.getType() == Piece.Type.SINGLE) {
+            if(piece.getColor() == Piece.Color.RED && move.getEndRow() == 0) {
                 piece.toKing();
             }
-            if(piece.getColor() == Piece.Color.WHITE && move.getEndRow() == 8 && piece.getType() == Piece.Type.SINGLE) {
+            if(piece.getColor() == Piece.Color.WHITE && move.getEndRow() == 7) {
                 piece.toKing();
             }
         }
