@@ -48,26 +48,57 @@ public class BoardTest {
     }
 
     @Test
-    public void testValidateSquare(){ assertTrue(CuT.validateSquare(2,3)); }
+    public void testValidateSquare(){ assertTrue(CuT.validateSquare(4,1)); }
 
     @Test
     public void testValidateMove() {
-        Move move = new Move(6,1,5,2);
+        Move move = new Move(5,0,4,1);
         assertTrue(CuT.validateMove(move, Player.Color.RED));
     }
 
     @Test
     public void testValidateSimpleMove(){
-        Move move = new Move(6,1,5,2);
+        Move move = new Move(5,0,4,1);
         assertTrue(CuT.validateSimpleMove(move,Player.Color.RED));
     }
 
     @Test
+    public void testCheckKing() {
+        Piece piece = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
+        Piece piece2 = new Piece(Piece.Type.SINGLE, Piece.Color.WHITE);
+        Move move = new Move(1,0,0,1);
+        Move move2 = new Move(6,1,7,0);
+        CuT.checkKing(piece,move);
+        CuT.checkKing(piece2,move2);
+        assertEquals(Piece.Type.KING,piece.getType());
+        assertEquals(Piece.Type.KING, piece2.getType());
+    }
+
+    @Test
     public void testAddPendingMove(){
-        Move move = new Move(6,1,5,2);
+        Move move = new Move(5,0,4,1);
         CuT.addPendingMove(move);
         ArrayList<Move> pendingMoves = CuT.getPendingMoves();
         assertEquals(1,pendingMoves.size());
+    }
+
+    @Test
+    public void testGetPendingMoves() {
+        Move move = new Move(5,0,4,1);
+        ArrayList<Move> test = new ArrayList<Move>();
+        test.add(move);
+        CuT.addPendingMove(move);
+        assertEquals(test,CuT.getPendingMoves());
+    }
+
+    @Test
+    public void testBackupMove() {
+        Move move = new Move(5,0,4,1);
+        CuT.addPendingMove(move);
+        ArrayList<Move> pendingMoves = CuT.getPendingMoves();
+        assertEquals(1,pendingMoves.size());
+        CuT.backupMove();
+        assertEquals(0,pendingMoves.size());
     }
 
     @Test

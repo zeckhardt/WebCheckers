@@ -36,6 +36,12 @@ public class PieceTest {
     public void testGetColor(){assertEquals(Piece.Color.RED, CuT.getColor());}
 
     @Test
+    public void testToKing() {
+        CuT.toKing();
+        assertEquals(Piece.Type.KING,CuT.getType());
+    }
+
+    @Test
     public void testEquals(){
         Piece CuT1 = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
         Piece CuT2 = new Piece(Piece.Type.SINGLE, Piece.Color.RED);

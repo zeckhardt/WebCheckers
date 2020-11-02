@@ -41,11 +41,26 @@ public class PlayerTest {
     }
 
     @Test
+    public void testHashCode() {
+        Player CuT1 = new Player("Test");
+        Player CuT2 = new Player("Test");
+        CuT1.hashCode();
+        CuT2.hashCode();
+        assertEquals(CuT1.hashCode(),CuT2.hashCode());
+    }
+
+    @Test
     public void test_equals() {
         final String name = "test";
         final Player CuT1 = new Player(name);
         final Player CuT2 = new Player(name);
         assertEquals(true, CuT1.equals(CuT2));
         assertEquals(true, CuT2.equals(CuT1));
+    }
+
+    @Test
+    public void testToString() {
+        final Player CuT = new Player("test");
+        assertEquals("test",CuT.toString());
     }
 }

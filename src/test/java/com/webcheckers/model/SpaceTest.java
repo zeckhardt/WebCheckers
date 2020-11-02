@@ -50,10 +50,22 @@ public class SpaceTest {
     }
 
     @Test
+    public void testRemovePiece() {
+        assertNull(CuT.removePiece());
+    }
+
+    @Test
     public void testEquals(){
         Space CuT1 = new Space(5);
         Space CuT2 = new Space(5);
         assertEquals(true, CuT1.equals(CuT2));
         assertEquals(true, CuT2.equals(CuT1));
+    }
+
+    @Test
+    public void testHashCode() {
+        Space CuT1 = new Space(5);
+        Space CuT2 = new Space(5);
+        assertEquals(CuT1.hashCode(),CuT2.hashCode());
     }
 }
