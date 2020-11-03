@@ -82,13 +82,14 @@ public class Board {
             }
             checkKing(p,m);
         }
-        pendingMoves.clear();
+            pendingMoves.clear();
     }
 
     public boolean validateMove(Move move, Player.Color currentTurn) {
-        return validateSquare(move.getEndRow(), move.getEndCell()) &&
-                (validateSimpleMove(move, currentTurn) ||
-                validateJumpMove(move, currentTurn));
+        if(jumpAvailable(move.getStartRow(), move.getStartCell(), currentTurn) && !validateJumpMove(move,currentTurn)) {
+            return false;
+        }
+        return validateSquare(move.getEndRow(), move.getEndCell()) && (validateSimpleMove(move, currentTurn) || validateJumpMove(move, currentTurn));
     }
 
     public boolean validateSquare(int endRow, int endCell) {
@@ -136,6 +137,49 @@ public class Board {
         } else {
             return false;
         }
+    }
+
+    public boolean jumpAvailable(int startRow,int startCell, Player.Color currentTurn) {
+        Space space = rows.get(startRow).getSpaces().get(startCell);
+
+        if(space.getPiece() == null) {
+            return false;
+        }
+
+        int frontRow;
+        int backRow;
+        if (space.getPiece().getColor() == Piece.Color.RED) {
+            frontRow = startRow - 2;
+            backRow = startRow + 2;
+        } else {
+            frontRow = startRow + 2;
+            backRow = startRow - 2;
+        }
+        int rightCell = startCell + 2;
+        int leftCell = startCell - 2;
+        boolean frontRight;
+        boolean frontLeft;
+        boolean backRight;
+        boolean backLeft;
+
+        if(rightCell <= 7 && frontRow <= 7) { //makes sure right cell and front row don't go out of bounds
+            frontRight = validateSquare(frontRow, rightCell) &&
+                    validateJumpMove(new Move(startRow, startCell, frontRow, rightCell), currentTurn);
+        } else {frontRight = false; }
+        if (leftCell >= 0 && frontRow <= 7){ //makes sure left cell and front row don't go out of bounds
+            frontLeft = validateSquare(frontRow, leftCell) &&
+                    validateJumpMove(new Move(startRow,startCell,frontRow,leftCell),currentTurn);
+        } else { frontLeft = false; }
+        if(rightCell <= 7 && backRow >= 0) {//makes sure right cell and back row don't go out of bounds
+            backRight = validateSquare(backRow, rightCell) &&
+                    validateJumpMove(new Move(startRow, startCell, backRow, rightCell), currentTurn);
+        } else { backRight = false; }
+        if(leftCell >= 0 && backRow >= 0) {//makes sure left cell and back row don't go out of bounds
+            backLeft = validateSquare(backRow, leftCell) &&
+                    validateJumpMove(new Move(startRow, startCell, backRow, leftCell), currentTurn);
+        } else { backLeft = false; }
+
+        return frontRight || frontLeft || backRight || backLeft;//returns true if one or more jump move is available
     }
 
     public void checkKing(Piece piece, Move move){
