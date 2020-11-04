@@ -63,7 +63,7 @@ public class PostCreateGameRoute implements Route {
 
         gameCenter.addGame(game);
 
-        response.redirect("/game?gameID=" + uuid.toString());
+        response.redirect("/game?view=PLAY&gameID=" + uuid.toString());
         return 200;
     }
 }
