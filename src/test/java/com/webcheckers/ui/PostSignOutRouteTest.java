@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,7 @@ public class PostSignOutRouteTest {
     private Session session;
     private PlayerLobby playerLobby;
     private Player player;
+    private GameCenter gameCenter;
 
     public PostSignOutRouteTest() {
     }
@@ -36,8 +38,9 @@ public class PostSignOutRouteTest {
         session = mock(Session.class);
         playerLobby = mock(PlayerLobby.class);
         player = mock(Player.class);
+        gameCenter = mock(GameCenter.class);
 
-        CuT = new PostSignOutRoute(playerLobby);
+        CuT = new PostSignOutRoute(gameCenter,playerLobby);
     }
 
     @Test
