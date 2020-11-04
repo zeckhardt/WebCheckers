@@ -81,8 +81,20 @@ public class Board {
                 midSpace.removePiece();
             }
             checkKing(p,m);
-            if (checkWon(p)) {
-                throw new NullPointerException();
+            int winStatus = checkWon();
+            switch(winStatus) {
+                case 0:
+                    System.out.println("No one won yet.");
+                    break;
+                case 1:
+                    System.out.println("White won.");
+                    break;
+                case 2:
+                    System.out.println("Red won.");
+                    break;
+                default:
+                    System.out.println("Wow this really shouldn't have happened.");
+                    break;
             }
         }
             pendingMoves.clear();
@@ -243,18 +255,26 @@ public class Board {
         }
     }
 
-    public boolean checkWon(Piece piece) {
-        int counted = 0; // the amount of a player's piece on the board
+    public int checkWon() {
+        int redCount= 0;
+        int whiteCount= 0;
         for (int i = 0; i < rows.size(); i++) {
             for (int j = 0; j < rows.size(); j++) {
                 if (rows.get(i).getSpaces().get(j).piece != null) {
-                    if (rows.get(i).getSpaces().get(j).piece.getColor().equals(piece.getColor())) {
-                        counted++;
-                    }
+                    if (rows.get(i).getSpaces().get(j).piece.getColor().equals(Piece.Color.RED)) {
+                        redCount++;
+                    } else if (rows.get(i).getSpaces().get(j).piece.getColor().equals(Piece.Color.WHITE))
+                        whiteCount++;
                 }
             }
         }
-        return counted == 0;
+        if (redCount == 0) {
+            return 1; // white won
+        } else if (whiteCount == 0) {
+            return 2; // red white
+        } else {
+            return 0;
+        }
     }
 
 
