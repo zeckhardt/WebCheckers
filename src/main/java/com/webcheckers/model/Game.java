@@ -74,4 +74,5 @@ public class Game {
     public Player getWhitePlayer() {
         return whitePlayer;
     }
+
 }
