@@ -45,8 +45,10 @@ public class PieceTest {
     public void testEquals(){
         Piece CuT1 = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
         Piece CuT2 = new Piece(Piece.Type.SINGLE, Piece.Color.RED);
-
+        CuT.toKing();
         assertEquals(true, CuT1.equals(CuT2));
         assertEquals(true, CuT2.equals(CuT1));
+        assertFalse(CuT1.equals(CuT));
+        assertFalse(CuT1.equals(null));
     }
 }

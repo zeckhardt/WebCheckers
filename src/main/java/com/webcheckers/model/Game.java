@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -13,6 +14,8 @@ public class Game {
     private Player whitePlayer;
     private Player.Color currentTurn;
     public boolean gameWon;
+    private ArrayList<Player> spectators;
+
 
     /**
      * Constructor
@@ -27,6 +30,7 @@ public class Game {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.currentTurn = Player.Color.RED;
+        this.spectators = new ArrayList<>();
     }
 
     /**
@@ -79,5 +83,17 @@ public class Game {
     public boolean checkGameWon() {
         gameWon = board.boardWon;
         return gameWon;
+    }
+
+    public void addSpectator(Player player) {
+        spectators.add(player);
+    }
+
+    public boolean removeSpectator(Player player) {
+        return spectators.remove(player);
+    }
+
+    public ArrayList<Player> getSpectators() {
+        return spectators;
     }
 }

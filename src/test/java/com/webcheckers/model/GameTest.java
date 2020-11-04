@@ -56,5 +56,7 @@ public class GameTest {
     public void testChangeTurn() {
         CuT.changeTurn();
         assertEquals(Player.Color.WHITE, CuT.getCurrentTurn());
+        CuT.changeTurn();
+        assertEquals(Player.Color.RED, CuT.getCurrentTurn());
     }
 }
