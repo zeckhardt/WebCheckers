@@ -12,6 +12,7 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
     private Player.Color currentTurn;
+    public boolean gameWon;
 
     /**
      * Constructor

@@ -81,6 +81,9 @@ public class Board {
                 midSpace.removePiece();
             }
             checkKing(p,m);
+            if (checkWon(p)) {
+                throw new NullPointerException();
+            }
         }
             pendingMoves.clear();
     }
@@ -239,6 +242,21 @@ public class Board {
             }
         }
     }
+
+    public boolean checkWon(Piece piece) {
+        int counted = 0; // the amount of a player's piece on the board
+        for (int i = 0; i < rows.size(); i++) {
+            for (int j = 0; j < rows.size(); j++) {
+                if (rows.get(i).getSpaces().get(j).piece != null) {
+                    if (rows.get(i).getSpaces().get(j).piece.getColor().equals(piece.getColor())) {
+                        counted++;
+                    }
+                }
+            }
+        }
+        return counted == 0;
+    }
+
 
     public void addPendingMove(Move move) {
         pendingMoves.add(move);
