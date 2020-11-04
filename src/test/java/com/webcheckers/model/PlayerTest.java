@@ -60,7 +60,10 @@ public class PlayerTest {
 
     @Test
     public void testToString() {
-        final Player CuT = new Player("test");
+        Player CuT = new Player("test");
+        Player CuT0 = new Player("fail");
         assertEquals("test",CuT.toString());
+        assertFalse(CuT0.equals(CuT));
+        assertFalse(CuT0.equals(null));
     }
 }
