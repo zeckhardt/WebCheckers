@@ -14,6 +14,7 @@ public class Player {
     private String name;
     private boolean inGame;
     private Color color;
+    public boolean isWinner;
 
     /**
      * Create a new player with the given name.
@@ -24,6 +25,7 @@ public class Player {
     public Player(String name) {
         this.name = Objects.requireNonNull(name, "name is required");
         this.inGame = false;
+        this.isWinner = false;
     }
 
     public void joinGame(Color color) {
