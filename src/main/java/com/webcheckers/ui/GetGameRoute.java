@@ -37,8 +37,17 @@ public class GetGameRoute implements Route {
         Game game = gameCenter.getGameByUUID(uuid);
 
         //TODO: Add the other view modes for nonplayers
-        if (viewMode.equals("SPECTATOR")) {
-            request.session().attribute("lastTurn", game.getCurrentTurn());
+        if (viewMode != null) {
+            if (viewMode.equals("SPECTATOR")) {
+                request.session().attribute("lastTurn", game.getCurrentTurn());
+                Player player = request.session().attribute("player");
+                if (!game.getSpectators().contains(player)) {
+                    game.addSpectator(player);
+                }
+            }
+        }
+        else {
+            viewMode = "PLAY";
         }
 
         Player redPlayer = game.getRedPlayer();

@@ -62,6 +62,8 @@ public class WebServer {
   public static final String VALIDATE_MOVE_URL = "/validateMove";
   public static final String BACKUP_MOVE_URL = "/backupMove";
   public static final String SUBMIT_TURN_URL = "/submitTurn";
+  public static final String SPECTATE_CHECK_TURN_URL = "/spectator/checkTurn";
+  public static final String SPECTATE_EXIT_GAME_URL = "/spectator/exitGame";
 
   //
   // Attributes
@@ -160,6 +162,8 @@ public class WebServer {
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
+    post(SPECTATE_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
+    post(SPECTATE_EXIT_GAME_URL, new PostSpectatorExitGameRoute(gameCenter, gson));
     //
     LOG.config("WebServer is initialized.");
   }
