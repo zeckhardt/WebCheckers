@@ -32,6 +32,7 @@ public class PostSignInRouteTest {
     private TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
     private Session session;
+    private Player player;
 
     @BeforeEach
     public void setup() {
@@ -40,6 +41,7 @@ public class PostSignInRouteTest {
         playerLobby = mock(PlayerLobby.class);
         response = mock(Response.class);
         session = mock(Session.class);
+        player = new Player("test");
         CuT = new PostSignInRoute(templateEngine, playerLobby);
     }
 
@@ -51,7 +53,15 @@ public class PostSignInRouteTest {
         CuT.handle(request,response);
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
+    }
 
+    @Test
+    public void testHandleValidUser(){
+        when(request.queryParams("username")).thenReturn("test");
+        when(playerLobby.isValidUsername("test")).thenReturn(true);
+        when(request.session(true)).thenReturn(session);
+        when(session.attribute("player")).thenReturn(player);
+        CuT.handle(request,response);
 
     }
 }
