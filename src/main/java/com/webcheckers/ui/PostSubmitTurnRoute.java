@@ -48,6 +48,9 @@ public class PostSubmitTurnRoute implements Route {
         Message message;
         if (turn) {
             game.getBoard().submitMove();
+            if (game.checkGameWon()) {
+                System.exit(1); // TODO: Not this
+            }
             game.changeTurn();
             message = Message.info("Move submitted.");
         } else {

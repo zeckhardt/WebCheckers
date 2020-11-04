@@ -17,6 +17,10 @@ public class GameCenter {
         games.add(game);
     }
 
+    public void removeGame(Game game){
+        games.remove(game);
+    }
+
     public ArrayList<Game> getGames() {
         return games;
     }

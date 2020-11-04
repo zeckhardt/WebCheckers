@@ -33,6 +33,11 @@ public class Player {
         this.color = color;
     }
 
+    public void leaveGame() {
+        inGame = false;
+        this.color = null;
+    }
+
     /**
      * Gets the player's name
      *
