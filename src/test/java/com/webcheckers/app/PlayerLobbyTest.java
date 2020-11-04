@@ -37,6 +37,13 @@ public class PlayerLobbyTest {
     }
 
     @Test
+    public void testRemovePlayer() {
+        Player player = new Player("name");
+        CuT.addPlayer(player);
+        assertTrue(CuT.removePlayer(player), "Unsuccessful remove");
+    }
+
+    @Test
     public void testGetPlayer() {
         ArrayList<Player> testAR = new ArrayList<>();
         Player test = new Player("player1");

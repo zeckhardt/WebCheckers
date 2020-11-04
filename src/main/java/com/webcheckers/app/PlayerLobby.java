@@ -64,6 +64,10 @@ public class PlayerLobby {
         players.add(player);
     }
 
+    public boolean removePlayer(Player player) {
+        return players.remove(player);
+    }
+
     /**
      * Gets the list of players currently in the lobby.
      *

@@ -1,0 +1,3 @@
+Use mvn compile exec:java to compile the system
+Open 2 browsers to localhost:4567 to begin testing the application
+Sign in on both sessions and continue to make a game to test the user stories

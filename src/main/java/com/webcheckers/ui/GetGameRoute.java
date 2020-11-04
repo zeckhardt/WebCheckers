@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.app.GameCenter;
-import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
