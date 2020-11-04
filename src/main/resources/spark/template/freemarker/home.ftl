@@ -35,6 +35,7 @@
                     </form>
                 </#if>
             </#list>
+            </br>
         <#else>
             Other players online: ${numPlayers}
             </br>

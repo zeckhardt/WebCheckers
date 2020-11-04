@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -37,9 +36,9 @@ public class PostSpectatorExitGameRoute implements Route {
         Player player = request.session().attribute("player");
         String uuidString = request.queryParams("gameID");
         Game game = gameCenter.getGameByUUID(UUID.fromString(uuidString));
-        boolean turn = player.getColor() == game.getCurrentTurn();
 
-        Message message = Message.info(((turn)? "true" : "false"));
-        return gson.toJson(message);
+        game.removeSpectator(player);
+        response.redirect("/");
+        return 200;
     }
 }
