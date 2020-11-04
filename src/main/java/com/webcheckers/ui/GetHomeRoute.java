@@ -66,17 +66,19 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
     ArrayList<Player> players = playerLobby.getPlayers();
+    ArrayList<Game> games = gameCenter.getGames();
     Player player = request.session().attribute("player");
 
     if (player != null) {
       vm.put("currentUser", player);
       vm.put("username", player.getName());
       vm.put("players", players);
+      vm.put("games", games);
 
       if (player.isInGame()) {
         for (Game g : gameCenter.getGames()) {
           if (player.equals(g.getRedPlayer()) || player.equals(g.getWhitePlayer())) {
-            response.redirect("/game?gameID=" + g.getUUID().toString());
+            response.redirect("/game?view=PLAY&gameID=" + g.getUUID().toString());
             return 200;
           }
         }
@@ -84,6 +86,7 @@ public class GetHomeRoute implements Route {
     }
     else {
       vm.put("numPlayers", players.size());
+      vm.put("numGames", games.size());
     }
 
     // display a user message in the Home page

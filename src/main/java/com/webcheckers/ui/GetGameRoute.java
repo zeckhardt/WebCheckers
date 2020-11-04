@@ -32,10 +32,14 @@ public class GetGameRoute implements Route {
 
         final Map<String, Object> vm = new HashMap<>();
         String uuidString = request.queryParams("gameID");
+        String viewMode = request.queryParams("view");
         UUID uuid = UUID.fromString(uuidString);
         Game game = gameCenter.getGameByUUID(uuid);
 
         //TODO: Add the other view modes for nonplayers
+        if (viewMode.equals("SPECTATOR")) {
+            request.session().attribute("lastTurn", game.getCurrentTurn());
+        }
 
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
@@ -44,7 +48,7 @@ public class GetGameRoute implements Route {
         vm.put("board", game.getBoard());
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);
-        vm.put("viewMode", "PLAY");
+        vm.put("viewMode", viewMode);
         vm.put("currentUser", request.session().attribute("player"));
         vm.put("activeColor", game.getCurrentTurn().toString());
 
