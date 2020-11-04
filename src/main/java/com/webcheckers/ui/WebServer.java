@@ -56,12 +56,15 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String SIGN_IN_URL = "/signin";
+  public static final String SIGN_OUT_URL = "/signout";
   public static final String GAME_URL = "/game";
   public static final String CREATE_GAME_URL = "/createGame";
   public static final String CHECK_TURN_URL = "/checkTurn";
   public static final String VALIDATE_MOVE_URL = "/validateMove";
   public static final String BACKUP_MOVE_URL = "/backupMove";
   public static final String SUBMIT_TURN_URL = "/submitTurn";
+  public static final String SPECTATE_CHECK_TURN_URL = "/spectator/checkTurn";
+  public static final String SPECTATE_EXIT_GAME_URL = "/spectator/stopWatching";
 
   //
   // Attributes
@@ -160,6 +163,9 @@ public class WebServer {
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
+    post(SPECTATE_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
+    get(SPECTATE_EXIT_GAME_URL, new PostSpectatorExitGameRoute(gameCenter, gson));
+    post(SIGN_OUT_URL, new PostSignOutRoute(gameCenter, playerLobby));
     //
     LOG.config("WebServer is initialized.");
   }

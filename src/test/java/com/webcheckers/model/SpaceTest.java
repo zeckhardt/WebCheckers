@@ -36,6 +36,8 @@ public class SpaceTest {
     public void testIsValid(){
         CuT.placePiece(piece);
         assertFalse(CuT.isValid());
+        CuT.removePiece();
+        assertTrue(CuT.isValid());
     }
 
     @Test
@@ -60,6 +62,9 @@ public class SpaceTest {
         Space CuT2 = new Space(5);
         assertEquals(true, CuT1.equals(CuT2));
         assertEquals(true, CuT2.equals(CuT1));
+        CuT.placePiece(piece);
+        assertFalse(CuT1.equals(CuT));
+        assertFalse(CuT1.equals(null));
     }
 
     @Test
