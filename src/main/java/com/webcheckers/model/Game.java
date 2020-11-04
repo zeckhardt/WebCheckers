@@ -13,7 +13,9 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
     private Player.Color currentTurn;
+    public boolean gameWon;
     private ArrayList<Player> spectators;
+
 
     /**
      * Constructor
