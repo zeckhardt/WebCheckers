@@ -131,12 +131,16 @@ public class Board {
 
     public boolean validateJumpMove(Move move, Player.Color currentTurn) {
         Space space = rows.get(move.getStartRow()).getSpaces().get(move.getStartCell());
-        if (pendingMoves.isEmpty()) {
             int midRow = (move.getStartRow() + move.getEndRow()) / 2;
             int midCell = (move.getStartCell() + move.getEndCell()) / 2;
             Piece piece = rows.get(midRow).getSpaces().get(midCell).getPiece();
             if (currentTurn == Player.Color.RED) {
-                if(space.getPiece().getType() == Piece.Type.SINGLE) {//only allows forward capture if single
+                //only allows forward capture if single
+                //allows backward capture if king
+                if(space.getPiece() == null) {
+                    space = rows.get(pendingMoves.get(0).getStartRow()).getSpaces().get(pendingMoves.get(0).getStartCell());
+                }
+                if (space.getPiece().getType() == Piece.Type.SINGLE) {//only allows forward capture if single
                     return move.getEndRow() - move.getStartRow() == -2 &&
                             Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
                             piece != null &&
@@ -151,6 +155,9 @@ public class Board {
                             piece.getColor() == Piece.Color.WHITE);
                 }
             } else {
+                if(space.getPiece() == null) {
+                    space = rows.get(pendingMoves.get(0).getStartRow()).getSpaces().get(pendingMoves.get(0).getStartCell());
+                }
                 if(space.getPiece().getType() == Piece.Type.SINGLE) {//only allows forward capture if single
                     return move.getEndRow() - move.getStartRow() == 2 &&
                             Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
@@ -166,9 +173,6 @@ public class Board {
                             piece.getColor() == Piece.Color.RED);
                 }
             }
-        } else {
-            return false;
-        }
     }
 
     public boolean jumpAvailable(int startRow,int startCell, Player.Color currentTurn) {
