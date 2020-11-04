@@ -41,14 +41,27 @@ public class Row {
         return index;
     }
 
+    /**
+     * Gets a list of all the spaces
+     * @return a list of all the spaces in the row
+     */
     public ArrayList<Space> getSpaces() {
         return spaces;
     }
 
+    /**
+     * Makes the spaces into an iterator for use by a template engine
+     * @return an iterator of spaces
+     */
     public Iterator<Space> iterator() {
         return spaces.iterator();
     }
 
+    /**
+     * Checks whether a row is identical to another row
+     * @param o the other row to check
+     * @return if identical
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,6 +70,10 @@ public class Row {
         return id == row.id;
     }
 
+    /**
+     * Creates a hashcode for the row
+     * @return hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id);

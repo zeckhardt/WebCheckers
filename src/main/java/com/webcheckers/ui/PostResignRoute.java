@@ -18,6 +18,9 @@ import java.util.logging.Logger;
 import static spark.Spark.get;
 
 
+/**
+ * Handles when a player wants to resign
+ */
 public class PostResignRoute implements Route{
     private static final Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
     private GameCenter gameCenter;
@@ -31,6 +34,13 @@ public class PostResignRoute implements Route{
         //
         LOG.config("PostResignRoute is initialized.");
     }
+
+    /**
+     * Handles the requests for resigning
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostResignRoute invoked.");
         String uuidString = request.queryParams("gameID");

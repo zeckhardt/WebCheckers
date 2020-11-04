@@ -76,6 +76,10 @@ public class Game {
         return whitePlayer;
     }
 
+    /**
+     * Check if the game was won
+     * @return if the board of the game is in a win state
+     */
     public boolean checkGameWon() {
         gameWon = board.boardWon;
         return gameWon;

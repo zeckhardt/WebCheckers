@@ -9,6 +9,9 @@ import spark.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Gets the game route
+ */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
     private final TemplateEngine templateEngine;
@@ -27,6 +30,12 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is initialized.");
     }
 
+    /**
+     * Handles the incoming request
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("GetGameRoute invoked.");
 

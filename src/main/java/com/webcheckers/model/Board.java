@@ -33,6 +33,9 @@ public class Board {
         }
     }
 
+    /**
+     * Place pieces on all the required spaces on the board
+     */
     private void initPieces() {
         for (int row = 0; row < 3; row++) {
             int col = 0;
@@ -63,6 +66,9 @@ public class Board {
         }
     }
 
+    /**
+     * Removes the piece from its old space and then moves it to its new space. Also checks if that resulted in a win.
+     */
     public void submitMove() {
         for (Move m : pendingMoves) {
             int startRow = m.getStartRow();
@@ -82,6 +88,7 @@ public class Board {
                 midSpace.removePiece();
             }
             checkKing(p,m);
+
             int winStatus = checkWon();
             switch(winStatus) {
                 case 0:
@@ -103,6 +110,12 @@ public class Board {
             pendingMoves.clear();
     }
 
+    /**
+     * Checks whether a move is valid
+     * @param move the move being checked
+     * @param currentTurn the color whose turn it is
+     * @return
+     */
     public boolean validateMove(Move move, Player.Color currentTurn) {
         if(jumpAvailable(move.getStartRow(), move.getStartCell(), currentTurn) && !validateJumpMove(move,currentTurn)) {
             return false;
@@ -111,10 +124,22 @@ public class Board {
                 (validateSimpleMove(move, currentTurn) || validateJumpMove(move, currentTurn));
     }
 
+    /**
+     * Checks whether the space that the piece will be put on is a valid square to be placed on
+     * @param endRow the row of the space
+     * @param endCell the cell
+     * @return false if the square is invalid, true otherwise
+     */
     public boolean validateSquare(int endRow, int endCell) {
         return (endRow + endCell) % 2 != 0 && rows.get(endRow).getSpaces().get(endCell).getPiece() == null;
     }
 
+    /**
+     * Logic for whether a regular move is valid
+     * @param move the move being checked
+     * @param currentTurn the player whose turn it is
+     * @return whether the move is valid
+     */
     public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
         int startRow = move.getStartRow();
         int startCell = move.getStartCell();
@@ -147,6 +172,12 @@ public class Board {
         }
     }
 
+    /**
+     * Checks whether a jump move is valid or not.
+     * @param move the move to check
+     * @param currentTurn the player whose turn it is
+     * @return true if the jump move is allowed, false otherwise
+     */
     public boolean validateJumpMove(Move move, Player.Color currentTurn) {
         Space space = rows.get(move.getStartRow()).getSpaces().get(move.getStartCell());
             int midRow = (move.getStartRow() + move.getEndRow()) / 2;
@@ -193,6 +224,13 @@ public class Board {
             }
     }
 
+    /**
+     * Checks whether a jump move is available to be made or not
+     * @param startRow the starting row to check
+     * @param startCell the starting cell to check
+     * @param currentTurn the color of the player whose turn it is
+     * @return True if there is a jump move, false otherwise
+     */
     public boolean jumpAvailable(int startRow,int startCell, Player.Color currentTurn) {
         Space space = rows.get(startRow).getSpaces().get(startCell);
 
@@ -247,6 +285,11 @@ public class Board {
         return frontRight || frontLeft || backRight || backLeft;//returns true if one or more jump move is available
     }
 
+    /**
+     * Checks whether a piece can be upgraded to a king
+     * @param piece the piece being checked
+     * @param move the move that would show whether the piece is moving towards its opposite end
+     */
     public void checkKing(Piece piece, Move move){
         if(piece != null && move != null){
             if(piece.getColor() == Piece.Color.RED && move.getEndRow() == 0) {
@@ -258,6 +301,10 @@ public class Board {
         }
     }
 
+    /**
+     * Checks whether the game is won by checking if all of one color piece is gone
+     * @return
+     */
     public int checkWon() {
         int redCount= 0;
         int whiteCount= 0;
@@ -281,26 +328,50 @@ public class Board {
     }
 
 
+    /**
+     * Adds a move to the move queue
+     * @param move the move to add
+     */
     public void addPendingMove(Move move) {
         pendingMoves.add(move);
     }
 
+    /**
+     * Gets a list of all of the pending moves
+     * @return an ArrayList of moves
+     */
     public ArrayList<Move> getPendingMoves(){
         return pendingMoves;
     }
 
+    /**
+     * Undoes the last move made
+     */
     public void backupMove() {
         pendingMoves.remove(pendingMoves.size() - 1);
     }
 
+    /**
+     * Gets all the rows in the board
+     * @return
+     */
     public ArrayList<Row> getRows() {
         return this.rows;
     }
 
+    /**
+     * Deprecated
+     * @return
+     */
     public Iterator<Row> iterator() {
         return rows.iterator();
     }
 
+    /**
+     * Used to check whether two board instances are identical
+     * @param other the other board to look at
+     * @return whether they are the same or not
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;

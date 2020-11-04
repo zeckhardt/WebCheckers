@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Route for checking whether a move is valid
+ */
 public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
     private GameCenter gameCenter;
@@ -29,6 +32,12 @@ public class PostCheckTurnRoute implements Route {
         LOG.config("PostCheckTurnRoute is initialized.");
     }
 
+    /**
+     * Handles the request for checking a turn
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostCheckTurnRoute invoked.");
 

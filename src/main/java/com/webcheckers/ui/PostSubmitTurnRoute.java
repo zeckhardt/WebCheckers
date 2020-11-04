@@ -13,6 +13,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Handles the submitting of a turn
+ */
 public class PostSubmitTurnRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
@@ -32,6 +35,12 @@ public class PostSubmitTurnRoute implements Route {
         LOG.config("PostSubmitTurnRoute is initialized.");
     }
 
+    /**
+     * Handles the submitting of a turn
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostSubmitTurnRoute invoked.");
 

@@ -9,10 +9,10 @@ public class Move {
 
     /**
      * Creates a movement object who's state is looked at for movement
-     * @param startRow
-     * @param startCell
-     * @param endRow
-     * @param endCell
+     * @param startRow starting row
+     * @param startCell starting cell
+     * @param endRow ending row to place on
+     * @param endCell ending cell to place on
      */
     public Move(int startRow, int startCell, int endRow, int endCell) {
         this.startRow = startRow;

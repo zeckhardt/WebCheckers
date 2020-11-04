@@ -13,6 +13,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Used for when a user clicks a button to backup their move
+ */
 public class PostBackupMoveRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
@@ -32,6 +35,12 @@ public class PostBackupMoveRoute implements Route {
         LOG.config("PostBackupMoveRoute is initialized.");
     }
 
+    /**
+     * Handles the request when the backup button is pressed
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostBackupMoveRoute invoked.");
 

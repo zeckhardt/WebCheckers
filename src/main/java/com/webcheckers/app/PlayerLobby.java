@@ -74,6 +74,11 @@ public class PlayerLobby {
         return players;
     }
 
+    /**
+     * Gets a player from the lobby by their name
+     * @param name the name of the player
+     * @return the player object
+     */
     public Player getPlayerByName(String name) {
         for (Player p : players) {
             if (p.getName().equals(name)){
