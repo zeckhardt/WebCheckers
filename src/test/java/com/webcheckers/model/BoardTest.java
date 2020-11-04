@@ -8,6 +8,7 @@ import spark.Request;
 import spark.TemplateEngine;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -48,6 +49,14 @@ public class BoardTest {
     }
 
     @Test
+    public void testSubmitMove() {
+        Move move = new Move(3,0,4,1);
+        CuT.addPendingMove(move);
+        CuT.submitMove();
+        assertEquals(0,CuT.getPendingMoves().size());
+    }
+
+    @Test
     public void testValidateSquare(){ assertTrue(CuT.validateSquare(4,1)); }
 
     @Test
@@ -60,6 +69,18 @@ public class BoardTest {
     public void testValidateSimpleMove(){
         Move move = new Move(5,0,4,1);
         assertTrue(CuT.validateSimpleMove(move,Player.Color.RED));
+    }
+
+    @Test
+    public void testValidateJumpMove() {
+        Move move = new Move(2,3,0,5);
+        assertTrue(CuT.validateJumpMove(move, Player.Color.RED));
+    }
+
+    @Test
+    public void testJumpAvailable() {
+        assertFalse(CuT.jumpAvailable(5,5, Player.Color.RED));
+        assertFalse(CuT.jumpAvailable(1,5, Player.Color.RED));
     }
 
     @Test
@@ -107,8 +128,11 @@ public class BoardTest {
         final Board CuT1 = new Board();
         CuT0.hashCode();
         CuT1.hashCode();
+        CuT.getRows().remove(2);
         assertEquals(true,CuT0.equals(CuT1));
         assertEquals(true,CuT1.equals(CuT0));
+        assertFalse(CuT0.equals(CuT));
+        assertFalse(CuT0.equals(null));
     }
 
 }

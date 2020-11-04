@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import spark.ModelAndView;
@@ -47,11 +48,7 @@ public class PostSignInRouteTest {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
-        String test = "test name";
         CuT.handle(request,response);
-
-
-
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 

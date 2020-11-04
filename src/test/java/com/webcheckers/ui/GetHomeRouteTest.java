@@ -30,6 +30,7 @@ public class GetHomeRouteTest {
     private GameCenter gameCenter;
     private Session session;
     private Player player;
+    private Player player2;
 
     @BeforeEach
     public void setup() {
@@ -39,6 +40,7 @@ public class GetHomeRouteTest {
         gameCenter = mock(GameCenter.class);
         response = mock(Response.class);
         session = mock(Session.class);
+        player2 = mock(Player.class);
         when(request.session()).thenReturn(session);
         CuT = new GetHomeRoute(engine,lobby,gameCenter);
     }
@@ -49,6 +51,7 @@ public class GetHomeRouteTest {
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         player = new Player("player1");
         when(session.attribute("player")).thenReturn(player);
+        when(player2.isInGame()).thenReturn(true);
         CuT.handle(request, response);
 
 
