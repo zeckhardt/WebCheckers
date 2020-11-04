@@ -86,6 +86,10 @@ public class Player {
         return this.name.equals(that.getName());
     }
 
+    /**
+     * Gives a string representation of a player
+     * @return the string name of the player
+     */
     @Override
     public String toString() {
         return name;

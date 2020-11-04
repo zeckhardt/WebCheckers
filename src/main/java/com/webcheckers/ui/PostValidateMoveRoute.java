@@ -18,6 +18,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Routes for validation of moves
+ */
 public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
     private GameCenter gameCenter;
@@ -36,6 +39,12 @@ public class PostValidateMoveRoute implements Route {
         LOG.config("PostValidateMoveRoute is initialized.");
     }
 
+    /**
+     * Handles the required request
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostValidateMoveRoute invoked.");
 

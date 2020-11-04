@@ -34,8 +34,16 @@ public class Piece {
         return this.color;
     }
 
+    /**
+     * Upgrades a piece into a king
+     */
     public void toKing(){this.type = Type.KING;}
 
+    /**
+     * Checks whether an instance of a piece is identical to another instance
+     * @param other the other piece to check
+     * @return True if identical
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;

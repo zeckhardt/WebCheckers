@@ -33,22 +33,39 @@ public class Space {
         return this.piece == null;
     }
 
+    /**
+     * Gets the piece that is currently on the space
+     * @return the piece on the space
+     */
     public Piece getPiece() {
         return this.piece;
     }
 
+    /**
+     * Places a piece object on a space
+     * @param piece the piece to place
+     */
     public void placePiece(Piece piece) {
         if (this.piece == null) {
             this.piece = piece;
         }
     }
 
+    /**
+     * Removes a piece from the space
+     * @return the piece removed
+     */
     public Piece removePiece() {
         Piece p = piece;
         piece = null;
         return p;
     }
 
+    /**
+     * Checks if two spaces are identical
+     * @param o the other space to check
+     * @return if identical
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +75,10 @@ public class Space {
                 Objects.equals(piece, space.piece);
     }
 
+    /**
+     * Makes a hashcode for the space for efficiency
+     * @return the hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(cellIdx, piece);

@@ -12,6 +12,9 @@ import spark.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Creates a game when another user is clicked
+ */
 public class PostCreateGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostCreateGameRoute.class.getName());
     private final TemplateEngine templateEngine;
@@ -32,6 +35,12 @@ public class PostCreateGameRoute implements Route {
         LOG.config("PostCreateGameRoute is initialized.");
     }
 
+    /**
+     * Handles the request
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response) {
         LOG.finer("PostCreateGameRoute invoked.");
 
