@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Player;
@@ -86,7 +87,15 @@ public class GetHomeRoute implements Route {
     }
 
     // display a user message in the Home page
-    vm.put(WELCOME_ATTR, WELCOME_MSG);
+    Message message = request.session().attribute("message");
+    request.session().removeAttribute("message");
+    if (message == null) {
+      vm.put(WELCOME_ATTR, WELCOME_MSG);
+    }
+    else {
+      vm.put(WELCOME_ATTR, message);
+    }
+
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.model.Game;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.*;
@@ -39,6 +41,7 @@ public class PostCreateGameRoute implements Route {
         Player player2 = playerLobby.getPlayerByName(otherPlayerName);
 
         if (player1.isInGame() || player2.isInGame()) {
+            request.session().attribute("message", Message.error("That player is already in a game."));
             response.redirect("/");
             return 200;
         }
