@@ -41,4 +41,12 @@ public class RowTest {
         assertEquals(true,CuT1.equals(CuT2));
         assertEquals(true,CuT2.equals(CuT1));
     }
+
+    @Test
+    public void testHashCode() {
+        Row CuT1 = new Row(5);
+        Row CuT2 = new Row(5);
+        assertEquals(CuT1.hashCode(),CuT2.hashCode());
+        assertFalse(CuT1.equals(null));
+    }
 }

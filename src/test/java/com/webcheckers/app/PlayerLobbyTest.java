@@ -1,6 +1,7 @@
 package com.webcheckers.app;
 import java.util.ArrayList;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,16 +17,22 @@ public class PlayerLobbyTest {
     private PlayerLobby CuT;
 
     @BeforeEach
-    public void setup(){ CuT = new PlayerLobby();}
+    public void setup() {
+        CuT = new PlayerLobby();
+    }
 
     @Test
-    public void ctor(){final PlayerLobby CuT = new PlayerLobby();
+    public void ctor() {
+        final PlayerLobby CuT = new PlayerLobby();
     }
 
     @Test
     public void testIsValidUsername() {
         final PlayerLobby CuT = new PlayerLobby();
-        assertFalse(CuT.isValidUsername("@#$&*#"),"Expected True, got False");
+        assertFalse(CuT.isValidUsername("@#$&*#"), "Expected True, got False");
+        assertTrue(CuT.isValidUsername("test"));
+        CuT.addPlayer(new Player("test2"));
+        assertFalse(CuT.isValidUsername("test2"));
     }
 
     @Test
@@ -33,7 +40,7 @@ public class PlayerLobbyTest {
         Player player = new Player("name");
         ArrayList<Player> players = CuT.getPlayers();
         CuT.addPlayer(player);
-        assertEquals(1,players.size(), "Invalid Player");
+        assertEquals(1, players.size(), "Invalid Player");
     }
 
     @Test
@@ -60,7 +67,7 @@ public class PlayerLobbyTest {
         ArrayList<Player> players = CuT.getPlayers();
         Player test = new Player("p1");
         CuT.addPlayer(test);
-        assertNotNull(CuT.getPlayerByName("p1"),"Expected no null, got null return");
-
+        assertNotNull(CuT.getPlayerByName("p1"), "Expected no null, got null return");
+        assertNull(CuT.getPlayerByName("p2"));
     }
 }

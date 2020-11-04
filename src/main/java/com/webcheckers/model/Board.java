@@ -80,15 +80,17 @@ public class Board {
                 Space midSpace = rows.get(midRow).getSpaces().get(midCell);
                 midSpace.removePiece();
             }
+            checkKing(p,m);
         }
-
-        pendingMoves.clear();
+            pendingMoves.clear();
     }
 
     public boolean validateMove(Move move, Player.Color currentTurn) {
+        if(jumpAvailable(move.getStartRow(), move.getStartCell(), currentTurn) && !validateJumpMove(move,currentTurn)) {
+            return false;
+        }
         return validateSquare(move.getEndRow(), move.getEndCell()) &&
-                (validateSimpleMove(move, currentTurn) ||
-                validateJumpMove(move, currentTurn));
+                (validateSimpleMove(move, currentTurn) || validateJumpMove(move, currentTurn));
     }
 
     public boolean validateSquare(int endRow, int endCell) {
@@ -96,13 +98,31 @@ public class Board {
     }
 
     public boolean validateSimpleMove(Move move, Player.Color currentTurn) {
+        int startRow = move.getStartRow();
+        int startCell = move.getStartCell();
+        Space space = rows.get(startRow).getSpaces().get(startCell);
+
         if (pendingMoves.isEmpty()) {
             if (currentTurn == Player.Color.RED) {
-                return move.getEndRow() - move.getStartRow() == -1 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                if(space.getPiece().getType() == Piece.Type.SINGLE) {//allows for only forward movement
+                    return move.getEndRow() - move.getStartRow() == -1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                } else {//allows for movement both back and forward if king
+                    return (move.getEndRow() - move.getStartRow() == -1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1) ||
+                            (move.getEndRow() - move.getStartRow() == 1 &&
+                                    Math.abs(move.getEndCell() - move.getStartCell()) == 1);
+                }
             } else {
-                return move.getEndRow() - move.getStartRow() == 1 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                if(space.getPiece().getType() == Piece.Type.SINGLE) {//allows for only forward movement
+                    return move.getEndRow() - move.getStartRow() == 1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1;
+                } else { //allows for movement both back and forward if king
+                    return (move.getEndRow() - move.getStartRow() == 1 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 1) ||
+                            (move.getEndRow() - move.getStartRow() == -1 &&
+                                    Math.abs(move.getEndCell() - move.getStartCell()) == 1);
+                }
             }
         } else {
             return false;
@@ -110,23 +130,113 @@ public class Board {
     }
 
     public boolean validateJumpMove(Move move, Player.Color currentTurn) {
-        if (pendingMoves.isEmpty()) {
+        Space space = rows.get(move.getStartRow()).getSpaces().get(move.getStartCell());
             int midRow = (move.getStartRow() + move.getEndRow()) / 2;
             int midCell = (move.getStartCell() + move.getEndCell()) / 2;
             Piece piece = rows.get(midRow).getSpaces().get(midCell).getPiece();
             if (currentTurn == Player.Color.RED) {
-                return move.getEndRow() - move.getStartRow() == -2 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
-                        piece != null &&
-                        piece.getColor() == Piece.Color.WHITE;
+                //only allows forward capture if single
+                //allows backward capture if king
+                if(space.getPiece() == null) {
+                    space = rows.get(pendingMoves.get(0).getStartRow()).getSpaces().get(pendingMoves.get(0).getStartCell());
+                }
+                if (space.getPiece().getType() == Piece.Type.SINGLE) {//only allows forward capture if single
+                    return move.getEndRow() - move.getStartRow() == -2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.WHITE;
+                } else {//allows backward capture if king
+                    return (move.getEndRow() - move.getStartRow() == -2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.WHITE) || (move.getEndRow() - move.getStartRow() == 2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.WHITE);
+                }
             } else {
-                return move.getEndRow() - move.getStartRow() == 2 &&
-                        Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
-                        piece != null &&
-                        piece.getColor() == Piece.Color.RED;
+                if(space.getPiece() == null) {
+                    space = rows.get(pendingMoves.get(0).getStartRow()).getSpaces().get(pendingMoves.get(0).getStartCell());
+                }
+                if(space.getPiece().getType() == Piece.Type.SINGLE) {//only allows forward capture if single
+                    return move.getEndRow() - move.getStartRow() == 2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.RED;
+                } else {//allows backward capture if king
+                    return (move.getEndRow() - move.getStartRow() == 2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.RED) || (move.getEndRow() - move.getStartRow() == -2 &&
+                            Math.abs(move.getEndCell() - move.getStartCell()) == 2 &&
+                            piece != null &&
+                            piece.getColor() == Piece.Color.RED);
+                }
+            }
+    }
+
+    public boolean jumpAvailable(int startRow,int startCell, Player.Color currentTurn) {
+        Space space = rows.get(startRow).getSpaces().get(startCell);
+
+        if(space.getPiece() == null) {
+            return false;
+        }
+
+        int frontRow;
+        int backRow;
+        if (space.getPiece().getColor() == Piece.Color.RED) {
+            if(startRow < 6 && startRow >= 2) {//makes sure that it doesn't check for moves out of bounds
+                frontRow = startRow - 2;
+                backRow = startRow + 2;
+            } else if(startRow < 2){
+                frontRow = startRow;
+                backRow = startRow +2;
+            } else {
+                frontRow = startRow - 2;
+                backRow = startRow;
             }
         } else {
-            return false;
+            frontRow = startRow + 2;
+            backRow = startRow - 2;
+        }
+        int rightCell = startCell + 2;
+        int leftCell = startCell - 2;
+        boolean frontRight;
+        boolean frontLeft;
+        boolean backRight;
+        boolean backLeft;
+
+        if(rightCell <= 7 && frontRow <= 7) { //makes sure right cell and front row don't go out of bounds
+            frontRight = validateSquare(frontRow, rightCell) &&
+                    validateJumpMove(new Move(startRow, startCell, frontRow, rightCell), currentTurn);
+        } else {frontRight = false; }
+
+        if (leftCell >= 0 && frontRow <= 7){ //makes sure left cell and front row don't go out of bounds
+            frontLeft = validateSquare(frontRow, leftCell) &&
+                    validateJumpMove(new Move(startRow,startCell,frontRow,leftCell),currentTurn);
+        } else { frontLeft = false; }
+
+        if(rightCell <= 7 && backRow >= 0) {//makes sure right cell and back row don't go out of bounds
+            backRight = validateSquare(backRow, rightCell) &&
+                    validateJumpMove(new Move(startRow, startCell, backRow, rightCell), currentTurn);
+        } else { backRight = false; }
+
+        if(leftCell >= 0 && backRow >= 0) {//makes sure left cell and back row don't go out of bounds
+            backLeft = validateSquare(backRow, leftCell) &&
+                    validateJumpMove(new Move(startRow, startCell, backRow, leftCell), currentTurn);
+        } else { backLeft = false; }
+
+        return frontRight || frontLeft || backRight || backLeft;//returns true if one or more jump move is available
+    }
+
+    public void checkKing(Piece piece, Move move){
+        if(piece != null && move != null){
+            if(piece.getColor() == Piece.Color.RED && move.getEndRow() == 0) {
+                piece.toKing();
+            }
+            if(piece.getColor() == Piece.Color.WHITE && move.getEndRow() == 7) {
+                piece.toKing();
+            }
         }
     }
 

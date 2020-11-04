@@ -34,6 +34,8 @@ public class Piece {
         return this.color;
     }
 
+    public void toKing(){this.type = Type.KING;}
+
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;
