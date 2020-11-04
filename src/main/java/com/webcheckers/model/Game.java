@@ -76,4 +76,8 @@ public class Game {
         return whitePlayer;
     }
 
+    public boolean checkGameWon() {
+        gameWon = board.boardWon;
+        return gameWon;
+    }
 }

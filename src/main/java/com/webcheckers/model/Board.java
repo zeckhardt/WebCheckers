@@ -11,6 +11,7 @@ public class Board {
 
     private ArrayList<Row> rows = new ArrayList<>();
     private ArrayList<Move> pendingMoves;
+    public boolean boardWon = false;
 
 
     /**
@@ -88,9 +89,11 @@ public class Board {
                     break;
                 case 1:
                     System.out.println("White won.");
+                    boardWon = true;
                     break;
                 case 2:
                     System.out.println("Red won.");
+                    boardWon = true;
                     break;
                 default:
                     System.out.println("Wow this really shouldn't have happened.");
