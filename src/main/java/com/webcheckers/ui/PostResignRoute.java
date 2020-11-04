@@ -1,21 +1,20 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import static spark.Spark.get;
+import static spark.Spark.redirect;
 
 
 public class PostResignRoute implements Route{
@@ -28,10 +27,13 @@ public class PostResignRoute implements Route{
     public PostResignRoute(GameCenter gameCenter, Gson gson, TemplateEngine templateEngine, PlayerLobby playerLobby) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.gson = Objects.requireNonNull(gson, "gson is required");
+        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         //
         LOG.config("PostResignRoute is initialized.");
+
     }
-    public Object handle(Request request, Response response) {
+    public Object handle(Request request, Response response) throws Exception {
+
         LOG.finer("PostResignRoute invoked.");
         String uuidString = request.queryParams("gameID");
         Game game = gameCenter.getGameByUUID(UUID.fromString(uuidString));
@@ -39,11 +41,13 @@ public class PostResignRoute implements Route{
         Player redPlayer = game.getRedPlayer();
         redPlayer.leaveGame();
         whitePlayer.leaveGame();
-        gameCenter.removeGame(game);
-        playerLobby.addPlayer(whitePlayer);
-        playerLobby.addPlayer(redPlayer);
-
+        //gameCenter.removeGame(game);
         Message message = Message.info("You chickened out, and resigned from the game.");
-        return message;
+
+        String json;
+        Gson gson = new GsonBuilder().create();
+        json = gson.toJson(message);
+
+        return json;
     }
 }
