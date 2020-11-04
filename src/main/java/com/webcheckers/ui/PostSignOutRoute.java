@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.app.GameCenter;
 import com.webcheckers.app.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -18,6 +20,7 @@ public class PostSignOutRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostSignOutRoute.class.getName());
 
+    private GameCenter gameCenter;
     private PlayerLobby playerLobby;
 
     /**
@@ -26,7 +29,8 @@ public class PostSignOutRoute implements Route {
      * @param playerLobby
      *   the object logging player activities
      */
-    public PostSignOutRoute(PlayerLobby playerLobby) {
+    public PostSignOutRoute(GameCenter gameCenter, PlayerLobby playerLobby) {
+        this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         //
         LOG.config("PostSignOutRoute is initialized.");
@@ -48,6 +52,15 @@ public class PostSignOutRoute implements Route {
         LOG.finer("PostSignOutRoute is invoked.");
 
         Player player = request.session().attribute("player");
+
+        if (player.isInGame()) {
+            for (Game game : gameCenter.getGames()) {
+                if (game.getRedPlayer().equals(player) || game.getWhitePlayer().equals(player)) {
+                    // internal redirect to resign the game
+                }
+            }
+        }
+
         if (playerLobby.removePlayer(player)) {
             request.session().invalidate();
         }
