@@ -48,10 +48,9 @@ This section describes the features of the application.
 >sign in and out functions, giving players their own unique name._
 
 ### Roadmap of Enhancements
-> _Multi-game creation: This enhancement allows players join multiple games at the same time. The player can then select
->which game to play in and make moves in._
+> _Spectator mode: Allows the player to join an ongoing game and watch it. The player is not allowed to interact with
+>anything on the board._
 >
->_Request Hint: This enhancement allows the player to click a button and ask for help._
 
 
 ## Application Domain
@@ -92,7 +91,7 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](state-diagram.png)
 
-> _The interface is comprised of a few web pages with the addition of other states that indicate the user's current
+> _The interface consists of a few web pages with the addition of other states that indicate the user's current
 >status. The user starts out disconnected (no HTTP connection). Once connected the user is on the home screen, 
 >there is then a prompt to sign in, using a username via the sign-in page. A player then awaits game creation by either
 >via selecting a user to play against. The red player is then prompted to make a move and waits for the opponent user to
@@ -101,65 +100,45 @@ with the WebCheckers application.
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
-
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+> _The UI tier classes were given the responsibility of handling HTTP requests. The users were given the ability to sign
+>in and out of the service whenever they so chose to do so. Once logged in the user had the opportunity to either 
+>challenge another player to a game or spectate an ongoing game. The UI tier also handled the page refreshing to update
+>which player's turn it was as well as moves made. The players were given the ability to undo moves in the 
+>PostBackupMoveRoute as well as submit moves using PostSubmitMoveRoute. The players were given the opportunity to resign
+>which the UI tier handles removing the game was well as returning players to the Lobby._
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+> _The Application tier includes the GameCenter and PlayerLobby classes. When the application is first started
+>both classes are instantiated. The player lobby holds all the new players that log into the game. PlayerLobby also
+>handles the username validation. GameCenter contains all the ongoing games._
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+> _The model tier handles all the game logic. It has a game class that keeps track of the unique details about
+>the game. The game also keeps track of which player's turn it currently is. The Board class contains the beef
+>of the move validation. Whenever a piece is placed on the board, the board class determines from a multitude of 
+>variables whether the move is valid. Each space of the board is covered by the Space class which goes into the Row
+>class to make up the board. The pieces are then kept by the piece class which helps the board validate moves, as
+>well as keeps track of the state of the piece, i.e color and single or king._
+>![ModelTier](Model%20Tier.png)
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+> _If the project were to continue the first improvement to be made would be to move the move validation logic to the 
+>game class instead of the board class to adhere to programming design principles better. The next improvement that 
+>would be made would be to simplify the move validation so that it isn't a wall of text as well, so it can be unit tested
+>easier. The final improvement that would be made would be to better handle the winning and resigning mechanics rather
+>than just removing the player from the game._
 
 ## Testing
 > _The current code coverage for the project.
->![Application Tier Testing](test_img1.png)_
-
->_![Model Tier Testing](test_img3.png)_
-
->_![UI Tier Testing](test_img2.png)_
+>![CodeCoverage](codecoverage.png)_
 
 ### Acceptance Testing
-> _Currently all of the user stories have past the acceptance criteria. The only untested stories are those that
->have not been developed yet. There was not instances of acceptance criteria failing._
+> _All the acceptance testing has passed and any failures have been fixed._
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+> _Our unit testing strategy was to get as much code coverage as possible. This was made difficult in the Board class 
+>found in the Model tier because of the move validation logic. The validation methods were impossibly hard to test
+>without writing out an absurd amount of setup code. The UI tier tests were also a weak point for us because we couldn't 
+>figure out how properly test all the necessary components. The result of these difficulties was a %50 code coverage._
