@@ -2,12 +2,6 @@
 geometry: margin=1in
 ---
 # PROJECT Design Documentation
-
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: Team A - Tomato
 * Team members
@@ -50,7 +44,7 @@ This section describes the features of the application.
 ### Roadmap of Enhancements
 > _Spectator mode: Allows the player to join an ongoing game and watch it. The player is not allowed to interact with
 >anything on the board._
->
+>![SpectatorSequenceDiagram](spectate.png)
 
 
 ## Application Domain
@@ -112,6 +106,8 @@ with the WebCheckers application.
 > _The Application tier includes the GameCenter and PlayerLobby classes. When the application is first started
 >both classes are instantiated. The player lobby holds all the new players that log into the game. PlayerLobby also
 >handles the username validation. GameCenter contains all the ongoing games._
+>![SequenceStartaGame](Start%20a%20Game%20Sequence%20Diagram.png)
+>_This sequence diagram details the interactions in the time of the creation of a game._
 
 
 ### Model Tier
@@ -131,8 +127,8 @@ with the WebCheckers application.
 >than just removing the player from the game._
 
 ## Testing
-> _The current code coverage for the project.
->![CodeCoverage](codecoverage.png)_
+> _The current code coverage for the project._
+>![CodeCoverage](codecoverage.png)
 
 ### Acceptance Testing
 > _All the acceptance testing has passed and any failures have been fixed._
